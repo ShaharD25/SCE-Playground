@@ -1,4 +1,5 @@
 name: CI - Finance Microservice
+# This workflow is triggered on changes to the Finance microservice in the Backend directory.
 
 on:
   push:
