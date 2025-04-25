@@ -2,7 +2,7 @@ name: CI - Finance Microservice
 
 on:
   push:
-    branches: [ main, feature/ci-updates ]\
+    branches: [ main, feature/ci-updates ]
     paths:
       - 'Backend/FinanceService**'
   pull_request:
