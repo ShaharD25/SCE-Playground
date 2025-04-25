@@ -3,8 +3,12 @@ name: CI - Finance Microservice
 on:
   push:
     branches: [ main, feature/ci-updates ]
+    paths:
+      - 'Frontend/**'
   pull_request:
     branches: [ main ]
+    paths:
+      - 'Backend/FinanceService**'
 
 jobs:
   build:
@@ -15,8 +19,14 @@ jobs:
         working-directory: ./Frontend
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm install
