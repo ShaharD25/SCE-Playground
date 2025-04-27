@@ -1,4 +1,4 @@
-const pool = require('../../db'); // החיבור לדאטאבייס
+const pool = require('../data-access/db'); // החיבור לדאטאבייס
 
 // Service to update transaction status
 const updateTransactionStatusService = async (id, status) => {

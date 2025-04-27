@@ -62,7 +62,7 @@ const forwardFinanceRequests = async (req, res, next) => {
   }
 };
 
-export async function ping(req, res, next) {
+async function ping(req, res, next) {
   try {
     return res.status(200).json({ message: 'pong' });
   } catch (error) {
