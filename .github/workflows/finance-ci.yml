@@ -1,6 +1,5 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-# test:1
 name: CI - Finance Microservice
 
 on:
@@ -48,4 +47,4 @@ jobs:
     needs: [build-and-test]
     steps:
       - name: Deploy to Render
-        run: curl https://api.render.com/deploy/srv-XXXXX?key=YYYYYY
+        run: curl https://api.render.com/deploy/srv-d070mfqli9vc73eqkn2g?key=PF7-Cn1izP8
