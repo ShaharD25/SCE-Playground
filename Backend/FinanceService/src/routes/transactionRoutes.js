@@ -5,4 +5,8 @@ const authMiddleware = require('../../middleware/authMiddleware');
 
 router.patch('/:id', authMiddleware, updateTransactionStatus);
 
+router.get('/', (req, res) => {
+  res.send('Transaction service is alive!');
+});
+
 module.exports = router;
