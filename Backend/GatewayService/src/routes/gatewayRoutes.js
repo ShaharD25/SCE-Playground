@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { forwardAuthRequests, forwardProductsRequests, ping } from '../controllers/gatewayController.js';
+import { forwardAuthRequests ,ping } from '../controllers/gatewayController.js';
+import { forwardProductsRequests } from '../controllers/gatewayController.js'; 
 
 const router = Router();
 
