@@ -1,13 +1,11 @@
-// Simulate updating a transaction status
-exports.updateTransactionStatus = (id, newStatus) => {
-    // Fake "database" record (simulation only)
-    const updatedTransaction = {
-      id: id,
-      status: newStatus,
-      updatedAt: new Date().toISOString()
-    };
-  
-    console.log('Transaction updated:', updatedTransaction);
-    return updatedTransaction;
-  };
-  
+const pool = require('../data-access/db');
+
+// Service to update transaction status
+async function updateTransactionStatusService(id, status) {
+  await pool.query(
+    'UPDATE transactions SET status = $1 WHERE id = $2',
+    [status, id]
+  );
+}
+
+module.exports = { updateTransactionStatusService };

@@ -1,12 +1,21 @@
-const invoiceService = require('../services/invoiceService');
+const { createInvoiceService } = require('../services/invoiceService');
 
-// Handle POST /invoices
-exports.createInvoice = (req, res) => {
-  const invoiceData = req.body;
+// Controller to handle invoice creation
+async function createInvoice(req, res) {
+  try {
+    const { amount } = req.body;
+    const customer = req.user.customer;
 
-  // Call the service to create the invoice
-  const newInvoice = invoiceService.createInvoice(invoiceData);
+    if (!amount) {
+      return res.status(400).json({ error: 'Missing amount' });
+    }
 
-  // Return the created invoice to the client
-  res.status(201).json(newInvoice);
-};
+    const invoice = await createInvoiceService(customer, amount);
+    res.status(201).json({ message: 'Invoice created successfully', invoice });
+  } catch (err) {
+    console.error('Error creating invoice:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+module.exports = { createInvoice };

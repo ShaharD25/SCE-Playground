@@ -1,11 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const invoiceController = require('../controllers/invoiceController');
+const { createInvoice } = require('../controllers/invoiceController');
+const authMiddleware = require('../middleware/authMiddleware');
 
-// check what we're importing
-console.log('Controller loaded:', invoiceController);
-
-// POST /invoices – create a new invoice
-router.post('/', invoiceController.createInvoice);
+router.post('/', authMiddleware, createInvoice);
 
 module.exports = router;

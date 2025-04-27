@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const receiptController = require('../controllers/receiptController');
+const { createReceipt } = require('../controllers/receiptController');
+const authMiddleware = require('../middleware/authMiddleware');
 
-// POST /receipts/send – send receipt by email
-router.post('/send', receiptController.sendReceipt);
+router.post('/', authMiddleware, createReceipt);
 
 module.exports = router;

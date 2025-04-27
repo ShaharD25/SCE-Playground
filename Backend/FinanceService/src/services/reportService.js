@@ -1,40 +1,21 @@
-// Generate a simulated monthly report
-exports.generateMonthlyReport = (month, year) => {
-    const report = {
-      month,
-      year,
-      totalTransactions: 20,
-      totalAmount: 5000,
-      generatedAt: new Date().toISOString()
-    };
-  
-    console.log('Monthly report generated:', report);
-    return report;
-  };
-  
-  // Generate a simulated financial overview
-  exports.generateFinancialOverview = () => {
-    const overview = {
-      totalIncome: 15000,
-      totalExpenses: 7000,
-      netProfit: 8000,
-      generatedAt: new Date().toISOString()
-    };
-  
-    console.log('Financial overview generated:', overview);
-    return overview;
-  };
-  
-  // Generate a simulated real-time tracking of income and expenses
-  exports.getLiveTracking = () => {
-    const live = {
-      incomeToday: 3000,
-      expensesToday: 1200,
-      currentBalance: 1800,
-      lastUpdated: new Date().toISOString()
-    };
-  
-    console.log('Live tracking data:', live);
-    return live;
-  };
-  
+const pool = require('../data-access/db');
+
+// Service to fetch monthly income report
+async function getMonthlyReportService(customer) {
+  const result = await pool.query(
+    'SELECT SUM(amount) AS total_income FROM invoices WHERE customer = $1 AND EXTRACT(MONTH FROM created_at) = EXTRACT(MONTH FROM CURRENT_DATE)',
+    [customer]
+  );
+  return result.rows[0];
+}
+
+// Service to fetch overall financial summary
+async function getOverviewReportService(customer) {
+  const result = await pool.query(
+    'SELECT SUM(amount) AS total_income FROM invoices WHERE customer = $1',
+    [customer]
+  );
+  return result.rows[0];
+}
+
+module.exports = { getMonthlyReportService, getOverviewReportService };

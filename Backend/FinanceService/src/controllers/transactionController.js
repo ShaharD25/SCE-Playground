@@ -1,17 +1,21 @@
-const transactionService = require('../services/transactionService');
+const { updateTransactionStatusService } = require('../services/transactionService');
 
-// Handle PATCH /transactions/:id/status
-exports.updateTransactionStatus = (req, res) => {
-  const transactionId = req.params.id;
-  const { status } = req.body;
+// Controller to update transaction status
+async function updateTransactionStatus(req, res) {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
 
-  // Validate input
-  if (!status) {
-    return res.status(400).json({ error: 'Missing status field' });
+    if (!status) {
+      return res.status(400).json({ error: 'Missing status' });
+    }
+
+    await updateTransactionStatusService(id, status);
+    res.status(200).json({ message: 'Transaction status updated successfully' });
+  } catch (err) {
+    console.error('Error updating transaction:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
+}
 
-  // Call the service to update the transaction
-  const updatedTransaction = transactionService.updateTransactionStatus(transactionId, status);
-
-  res.status(200).json(updatedTransaction);
-};
+module.exports = { updateTransactionStatus };

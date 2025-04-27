@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const transactionController = require('../controllers/transactionController');
+const { updateTransactionStatus } = require('../controllers/transactionController');
+const authMiddleware = require('../middleware/authMiddleware');
 
-// PATCH /transactions/:id/status – update transaction status
-router.patch('/:id/status', transactionController.updateTransactionStatus);
+router.patch('/:id', authMiddleware, updateTransactionStatus);
 
 module.exports = router;

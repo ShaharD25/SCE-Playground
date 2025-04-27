@@ -1,25 +1,27 @@
-const reportService = require('../services/reportService');
+const { getMonthlyReportService, getOverviewReportService } = require('../services/reportService');
 
-// Handle GET /reports/monthly
-exports.getMonthlyReport = (req, res) => {
-  const { month, year } = req.query;
-
-  if (!month || !year) {
-    return res.status(400).json({ error: 'Missing month or year' });
+// Controller to get monthly report
+async function getMonthlyReport(req, res) {
+  try {
+    const customer = req.user.customer;
+    const report = await getMonthlyReportService(customer);
+    res.status(200).json(report);
+  } catch (err) {
+    console.error('Error fetching monthly report:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
+}
 
-  const report = reportService.generateMonthlyReport(month, year);
-  res.status(200).json(report);
-};
+// Controller to get overview report
+async function getOverviewReport(req, res) {
+  try {
+    const customer = req.user.customer;
+    const report = await getOverviewReportService(customer);
+    res.status(200).json(report);
+  } catch (err) {
+    console.error('Error fetching overview report:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
 
-// Handle GET /reports/overview
-exports.getFinancialOverview = (req, res) => {
-  const overview = reportService.generateFinancialOverview();
-  res.status(200).json(overview);
-};
-
-// Handle GET /reports/live
-exports.getLiveTracking = (req, res) => {
-  const liveData = reportService.getLiveTracking();
-  res.status(200).json(liveData);
-};
+module.exports = { getMonthlyReport, getOverviewReport };

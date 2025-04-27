@@ -1,14 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const reportController = require('../controllers/reportController');
+const { getMonthlyReport, getOverviewReport } = require('../controllers/reportController');
+const authMiddleware = require('../middleware/authMiddleware');
 
-// GET /reports/monthly – get monthly reports
-router.get('/monthly', reportController.getMonthlyReport);
-
-// GET /reports/overview – get financial overview
-router.get('/overview', reportController.getFinancialOverview);
-
-// GET /reports/live – return real-time income and expense tracking
-router.get('/live', reportController.getLiveTracking);
+router.get('/monthly', authMiddleware, getMonthlyReport);
+router.get('/overview', authMiddleware, getOverviewReport);
 
 module.exports = router;
