@@ -27,7 +27,7 @@ app.use('/reports', reportRoutes);
 console.log('reportRoutes loaded');
 
 app.get('/', (req, res) => {
-    res.send('Finance Service is running and healthy! ✅');
+    res.send('Finance Service is running and healthy! ');
 });
 
 const PORT = process.env.PORT || 4002;

@@ -8,7 +8,7 @@ const forwardAuthRequests = async (req, res, next) => {
     const path = req.originalUrl.replace('/auth', '');
     const url = `${authServiceUrl}${path}`;
 
-    console.log('Forwarding request to ' + url, ' body: ' + req.body);
+    console.log(`Forwarding request to ${  url}`, ` body: ${  req.body}`);
 
     // Forward the exact method and body
     const response = await axios.request({
@@ -70,4 +70,4 @@ export async function ping(req, res, next) {
   }
 }
 
-export { forwardAuthRequests, forwardFinanceRequests };
+export { forwardAuthRequests, forwardFinanceRequests, ping };
