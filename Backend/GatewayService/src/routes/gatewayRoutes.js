@@ -1,10 +1,11 @@
 import { Router } from 'express';
-import { forwardAuthRequests, forwardProductsRequests, ping } from '../controllers/gatewayController.js';
+import { forwardAuthRequests ,ping } from '../controllers/gatewayController.js';
+import { forwardFinanceRequests } from '../controllers/gatewayController.js';
 
 const router = Router();
 
+router.use('/finance', forwardFinanceRequests);  
 router.use('/auth', forwardAuthRequests);
-router.use('/products', forwardProductsRequests);
 router.get('/ping', ping);
 
 export default router;
