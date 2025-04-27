@@ -6,6 +6,6 @@ const router = Router();
 
 router.use('/finance', forwardFinanceRequests);  
 router.use('/auth', forwardAuthRequests);
- router.get('/ping', ping);
+router.get('/ping', ping);
 
 export default router;
