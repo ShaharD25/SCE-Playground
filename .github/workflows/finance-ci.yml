@@ -30,7 +30,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd Backend/FinanceService/Backend/AuthenticationService
+          cd Backend/FinanceService
           npm install
 
       - name: Run ESLint
