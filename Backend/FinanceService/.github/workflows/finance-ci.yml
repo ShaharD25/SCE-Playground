@@ -48,4 +48,4 @@ jobs:
     needs: [build-and-test]
     steps:
       - name: Deploy to Render
-        run: curl https://api.render.com/deploy/srv-XXXXX?key=YYYYYY
+        run: curl https://api.render.com/deploy/srv-d070mfqli9vc73eqkn2g?key=PF7-Cn1izP8
