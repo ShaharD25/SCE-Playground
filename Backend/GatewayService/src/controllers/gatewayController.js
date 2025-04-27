@@ -70,4 +70,4 @@ export async function ping(req, res, next) {
   }
 }
 
-export { forwardAuthRequests, forwardFinanceRequests };
+export { forwardAuthRequests, forwardFinanceRequests, ping };
