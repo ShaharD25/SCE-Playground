@@ -1,64 +1,95 @@
 import React, { useState } from 'react';
+import api from '../services/api'; // אל תשכח את זה!
 
 function FinanceModulePage() {
-  const [field1, setField1] = useState('');
-  const [field2, setField2] = useState('');
+  const [customerId, setCustomerId] = useState('');
+  const [amount, setAmount] = useState('');
+  const [status, setStatus] = useState('');
+  const [description, setDescription] = useState('');
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // לעצור רענון עמוד
-  
+    e.preventDefault();
+
     try {
       console.log('📦 Sending to backend:', {
-        customerName: field1,
-        customerId: field2,
+        customer_id: Number(customerId),
+        amount: Number(amount),
+        status,
+        description,
       });
-  
-      const response = await api.post('/finance/save', {
-        customerName: field1,
-        customerId: field2,
+
+      const response = await api.post('/transactions', {
+        customer_id: Number(customerId),
+        amount: Number(amount),
+        status,
+        description,
       });
-  
+
       console.log('✅ Server response:', response.data);
-      alert('Data sent successfully!');
-      
-      // ניקוי הטפסים אחרי שליחה
-      setField1('');
-      setField2('');
+      alert('Transaction created successfully!');
+
+      // ניקוי השדות
+      setCustomerId('');
+      setAmount('');
+      setStatus('');
+      setDescription('');
       
     } catch (error) {
-      console.error('❌ Failed to send data:', error);
-      alert('Failed to send data to the server');
+      console.error('❌ Failed to send data:', error.response?.data || error.message);
+      alert('Failed to send transaction');
     }
   };
-  
 
   return (
     <div style={{ padding: '2rem' }}>
       <h2>Welcome to the Finance Module</h2>
-      <p>This is where you’ll manage financial actions such as tracking payments, generating invoices, and more.</p>
 
       <form onSubmit={handleSubmit} style={{ marginTop: '2rem' }}>
         <div style={{ marginBottom: '1rem' }}>
-          <label>Enter value:</label><br />
+          <label>Customer ID:</label><br />
           <input
-            type="text"
-            value={field1}
-            onChange={(e) => setField1(e.target.value)}
-            placeholder="Type something..."
+            type="number"
+            value={customerId}
+            onChange={(e) => setCustomerId(e.target.value)}
+            placeholder="Enter customer ID"
+            required
           />
         </div>
 
         <div style={{ marginBottom: '1rem' }}>
-          <label>Second value:</label><br />
+          <label>Amount:</label><br />
           <input
-            type="text"
-            value={field2}
-            onChange={(e) => setField2(e.target.value)}
-            placeholder="Type second value..."
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            placeholder="Enter amount"
+            required
           />
         </div>
 
-        <button type="submit">Send Data</button>
+        <div style={{ marginBottom: '1rem' }}>
+          <label>Status:</label><br />
+          <input
+            type="text"
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            placeholder="Enter status"
+            required
+          />
+        </div>
+
+        <div style={{ marginBottom: '1rem' }}>
+          <label>Description:</label><br />
+          <input
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Enter description"
+            required
+          />
+        </div>
+
+        <button type="submit">Save Transaction</button>
       </form>
     </div>
   );
