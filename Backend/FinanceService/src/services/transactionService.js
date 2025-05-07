@@ -1,26 +1,33 @@
-const pool = require('../data-access/db'); // החיבור לדאטאבייס
+const {
+  insertTransaction,
+  fetchAllTransactions,
+  fetchTransactionById,
+  changeTransactionStatus
+} = require('../data-access/db'); // Data Access Layer
 
-// Service to update transaction status
-const updateTransactionStatusService = async (id, status) => {
-  const query = 'UPDATE transactions SET status = $1 WHERE id = $2';
-  const values = [status, id];
-  await pool.query(query, values);
+// Service: Create a new transaction
+const createTransactionService = async (data) => {
+  return await insertTransaction(data);
 };
 
-// Service to insert a new transaction
-const insertTransaction = async ({ customer_id, amount, status, description }) => {
-  const query = `
-    INSERT INTO transactions (customer_id, amount, status, description, created_at)
-    VALUES ($1, $2, $3, $4, NOW())
-    RETURNING *;
-  `;
+// Service: Get all transactions
+const getAllTransactionsService = async () => {
+  return await fetchAllTransactions();
+};
 
-  const values = [customer_id, amount, status, description];
-  const { rows } = await pool.query(query, values);
-  return rows[0];
+// Service: Get a transaction by its ID
+const getTransactionByIdService = async (id) => {
+  return await fetchTransactionById(id);
+};
+
+// Service: Update the status of a transaction
+const updateTransactionStatusService = async (id, status) => {
+  return await changeTransactionStatus(id, status);
 };
 
 module.exports = {
-  updateTransactionStatusService,
-  insertTransaction
+  createTransactionService,
+  getAllTransactionsService,
+  getTransactionByIdService,
+  updateTransactionStatusService
 };

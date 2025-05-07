@@ -6,7 +6,7 @@ import api from '../services/api.js';
 import '../App.css';
 
 export default function SignInPage() {
-  const { signIn, signOut, token } = useContext(StoreContext);
+  const { signIn, signOut } = useContext(StoreContext);
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -20,9 +20,8 @@ export default function SignInPage() {
     setLoading(true);
 
     try {
-      const { data } = await api.post('/auth/signin', { email, password });
-      signIn({ email, ...data.user }, data.token);
-      navigate('/');
+      await signIn(email, password); // now it does everything
+      navigate('/'); // navigate after success
     } catch (err) {
       setError(err.response?.data?.message || 'Sign in failed');
     } finally {
@@ -30,40 +29,8 @@ export default function SignInPage() {
     }
   }
 
-  // On initial load, check if user is already logged in
-  useEffect(() => {
-    const validateToken = async () => {
-      if (token) {
-        try {
-          const { isValid } = await api.post('/auth/validate-token', { token });
-          if (isValid) {
-            // Token is valid, user is already logged in
-            console.log('Token is valid, user is already logged in'); 
-            navigate('/');
-            return;
-          }
-          else {
-            // Token is invalid, redirect to sign-in page
-            console.log('Token is invalid');
-          }
-        } catch (err) {
-          console.error('Token validation failed:', err);
-        }
-      }
-      else {
-        console.log('No token found');
-      }
-      // If token is invalid or not present, redirect to sign-in page
-      console.log('Token is invalid or not present, redirecting to sign-in page');
-      signOut();
-      navigate('/signin');
-    };
-    validateToken();
-  }, [token, signOut]);
-
   return (
     <div className='auth-container'>
-      {/* LOADER – sits above everything else when active */}
       {loading && (
         <div className='loader-overlay'>
           <div className='spinner' />

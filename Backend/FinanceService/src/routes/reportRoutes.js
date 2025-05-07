@@ -1,14 +1,26 @@
 const express = require('express');
 const router = express.Router();
-const { getMonthlyReport, getOverviewReport } = require('../controllers/reportController');
+
+const {
+  createReport,
+  getAllReports,
+  getReportById,
+  updateReport
+} = require('../controllers/reportController');
+
+// Middleware placeholder – does not perform any authentication
 const authMiddleware = require('../../middleware/authMiddleware');
 
-router.get('/monthly', authMiddleware, getMonthlyReport);
-router.get('/overview', authMiddleware, getOverviewReport);
+// Create a new financial report
+router.post('/', authMiddleware, createReport);
 
-router.get('/', (req, res) => {
-  res.send('Report service is alive!');
-});
+// Retrieve all reports
+router.get('/', authMiddleware, getAllReports);
 
+// Retrieve a single report by its ID
+router.get('/:id', authMiddleware, getReportById);
+
+// Update an existing report by its ID
+router.patch('/:id', authMiddleware, updateReport);
 
 module.exports = router;

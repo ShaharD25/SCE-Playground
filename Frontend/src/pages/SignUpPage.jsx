@@ -15,7 +15,7 @@ export default function SignUpPage() {
     lastName: ''
   });
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
 
   function handleChange(e) {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -24,30 +24,23 @@ export default function SignUpPage() {
   async function handleSubmit(e) {
     e.preventDefault();
     setError(null);
-    setLoading(true); 
+    setLoading(true);
 
     try {
-      // 1) Create the account
-      await api.post('/auth/signup', form);
+      await api.post('/auth/signup', form); // register
 
-      // 2) Sign in automatically
-      const { data } = await api.post('/auth/signin', {
-        email: form.email,
-        password: form.password
-      });
-
-      signIn({ email: form.email, firstName: form.firstName }, data.token);
+      // login immediately after registration
+      await signIn(form.email, form.password);
       navigate('/products');
     } catch (err) {
       setError(err.response?.data?.message || 'Sign up failed');
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   }
 
   return (
     <div className='auth-container'>
-      {/* LOADER */}
       {loading && (
         <div className='loader-overlay'>
           <div className='spinner' />
@@ -62,7 +55,6 @@ export default function SignUpPage() {
 
       <h3>Sign Up</h3>
       {error && <p className='error-message'>{error}</p>}
-
       <form className='auth-form' onSubmit={handleSubmit}>
         <input type='email' name='email' placeholder='Email' value={form.email} onChange={handleChange} required />
         <input type='password' name='password' placeholder='Password' value={form.password} onChange={handleChange} required />

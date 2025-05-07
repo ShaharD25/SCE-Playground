@@ -1,12 +1,34 @@
-const pool = require('../data-access/db');
+const {
+  insertReceipt,
+  fetchAllReceipts,
+  fetchReceiptById,
+  updateReceiptData
+} = require('../data-access/db'); // Accessing DB layer
 
-// Service to insert a new receipt
-async function createReceiptService(customer, transaction_id) {
-  const result = await pool.query(
-    'INSERT INTO receipts (customer, transaction_id, created_at) VALUES ($1, $2, CURRENT_TIMESTAMP) RETURNING *',
-    [customer, transaction_id]
-  );
-  return result.rows[0];
-}
+// Service: Create a new receipt
+const createReceiptService = async (data) => {
+  return await insertReceipt(data);
+};
 
-module.exports = { createReceiptService };
+// Service: Get all receipts
+const getAllReceiptsService = async () => {
+  return await fetchAllReceipts();
+};
+
+// Service: Get a receipt by its ID
+const getReceiptByIdService = async (id) => {
+  return await fetchReceiptById(id);
+};
+
+// Service: Update a receipt with new data
+const updateReceiptService = async (id, newData) => {
+  return await updateReceiptData(id, newData);
+};
+
+module.exports = {
+  createReceiptService,
+  getAllReceiptsService,
+  getReceiptByIdService,
+  updateReceiptService
+};
+

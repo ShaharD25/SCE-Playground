@@ -1,12 +1,33 @@
-const pool = require('../data-access/db');
+const {
+  insertInvoice,
+  fetchAllInvoices,
+  fetchInvoiceById,
+  changeInvoiceStatus
+} = require('../data-access/db'); // Data Access Layer
 
-// Service to insert a new invoice
-async function createInvoiceService(customer, amount) {
-  const result = await pool.query(
-    'INSERT INTO invoices (customer, amount, created_at) VALUES ($1, $2, CURRENT_TIMESTAMP) RETURNING *',
-    [customer, amount]
-  );
-  return result.rows[0];
-}
+// Service: Create a new invoice
+const createInvoiceService = async (data) => {
+  return await insertInvoice(data);
+};
 
-module.exports = { createInvoiceService };
+// Service: Get all invoices
+const getAllInvoicesService = async () => {
+  return await fetchAllInvoices();
+};
+
+// Service: Get a specific invoice by its ID
+const getInvoiceByIdService = async (id) => {
+  return await fetchInvoiceById(id);
+};
+
+// Service: Update the status of an invoice (e.g., mark as paid)
+const updateInvoiceStatusService = async (id, status) => {
+  return await changeInvoiceStatus(id, status);
+};
+
+module.exports = {
+  createInvoiceService,
+  getAllInvoicesService,
+  getInvoiceByIdService,
+  updateInvoiceStatusService
+};

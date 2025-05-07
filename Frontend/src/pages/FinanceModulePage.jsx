@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import api from '../services/api'; // אל תשכח את זה!
+import api from '../services/api'; 
 
 function FinanceModulePage() {
   const [customerId, setCustomerId] = useState('');
@@ -11,31 +11,31 @@ function FinanceModulePage() {
     e.preventDefault();
 
     try {
-      console.log('📦 Sending to backend:', {
+      console.log('Sending to backend:', {
         customer_id: Number(customerId),
         amount: Number(amount),
         status,
         description,
       });
 
-      const response = await api.post('/transactions', {
+      const response = await api.post('/finance/transactions', {
         customer_id: Number(customerId),
         amount: Number(amount),
         status,
         description,
       });
 
-      console.log('✅ Server response:', response.data);
+      console.log(' Server response:', response.data);
       alert('Transaction created successfully!');
 
-      // ניקוי השדות
+      
       setCustomerId('');
       setAmount('');
       setStatus('');
       setDescription('');
       
     } catch (error) {
-      console.error('❌ Failed to send data:', error.response?.data || error.message);
+      console.error(' Failed to send data:', error.response?.data || error.message);
       alert('Failed to send transaction');
     }
   };

@@ -1,53 +1,38 @@
-// frontend/src/store/StoreContext.jsx
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState } from 'react';
+import api from '../services/api.js';
 
-// Create the StoreContext
+// Create a global context to share user state across the app
 export const StoreContext = createContext();
 
-// AuthProvider handles user state, token storage, etc.
-export function StoreProvider({ children }) {
-  const [user, setUser] = useState(null); // store entire user object
-  const [token, setToken] = useState(null);
+export const StoreProvider = ({ children }) => {
+  // Initialize user state from localStorage if available
+  const [user, setUser] = useState(() => {
+    const userFromStorage = localStorage.getItem('user');
+    return userFromStorage ? JSON.parse(userFromStorage) : null;
+  });
 
-  // Load token from localStorage (or sessionStorage) on initial load.
-  useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
-    if (storedToken) {
-      setToken(storedToken);
-    }
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
+  // Handle user sign-in (returns the user object to the calling component)
+  const signIn = async (email, password) => {
+    const response = await api.post('/auth/signin', { email, password });
+    const userData = response.data.user;
 
-  // Save token to localStorage whenever it changes
-  useEffect(() => {
-    if (token) localStorage.setItem('token', token);
-    else localStorage.removeItem('token');
-  }, [token]);
-
-  useEffect(() => {
-    if (user) localStorage.setItem('user', JSON.stringify(user));
-    else localStorage.removeItem('user');
-  }, [user]);
-
-  const signIn = (userData, authToken) => {
+    localStorage.setItem('user', JSON.stringify(userData));
     setUser(userData);
-    setToken(authToken);
+
+    return userData; // The caller will decide what to do next
   };
 
+  // Handle user sign-out (no navigation here)
   const signOut = () => {
+    localStorage.removeItem('user');
     setUser(null);
-    setToken(null);
   };
 
-  const value = {
-    user,
-    token,
-    signIn,
-    signOut
-  };
+  // Provide global state and auth functions to the rest of the app
+  return (
+    <StoreContext.Provider value={{ user, setUser, signIn, signOut }}>
+      {children}
+    </StoreContext.Provider>
+  );
+};
 
-  return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
-}

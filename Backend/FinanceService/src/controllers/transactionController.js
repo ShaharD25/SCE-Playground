@@ -1,47 +1,59 @@
-const { updateTransactionStatusService, insertTransaction } = require('../services/transactionService');
+const {
+  createTransactionService,
+  getAllTransactionsService,
+  getTransactionByIdService,
+  updateTransactionStatusService
+} = require('../services/transactionService');
 
-// Controller to update transaction status
-async function updateTransactionStatus(req, res) {
+// Create a new transaction
+const createTransaction = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const { status } = req.body;
-
-    if (!status) {
-      return res.status(400).json({ error: 'Missing status' });
-    }
-
-    await updateTransactionStatusService(id, status);
-    res.status(200).json({ message: 'Transaction status updated successfully' });
-  } catch (err) {
-    console.error('Error updating transaction:', err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-}
-
-// Controller to create a new transaction
-async function createTransaction(req, res) {
-  try {
-    const { customer_id, amount, status, description } = req.body;
-
-    if (!customer_id || !amount || !status || !description) {
-      return res.status(400).json({ error: 'Missing fields' });
-    }
-
-    const newTransaction = await insertTransaction({
-      customer_id,
-      amount,
-      status,
-      description
-    });
-
-    res.status(201).json(newTransaction);
+    const transaction = await createTransactionService(req.body);
+    res.status(201).json(transaction);
   } catch (error) {
-    console.error('Error creating transaction:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    next(error);
   }
-}
+};
+
+// Get all transactions
+const getAllTransactions = async (req, res, next) => {
+  try {
+    const transactions = await getAllTransactionsService();
+    res.json(transactions);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Get a specific transaction by ID
+const getTransactionById = async (req, res, next) => {
+  try {
+    const transaction = await getTransactionByIdService(req.params.id);
+    if (!transaction) {
+      return res.status(404).json({ message: 'Transaction not found' });
+    }
+    res.json(transaction);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Update the status of a transaction
+const updateTransactionStatus = async (req, res, next) => {
+  try {
+    const updatedTransaction = await updateTransactionStatusService(req.params.id, req.body.status);
+    if (!updatedTransaction) {
+      return res.status(404).json({ message: 'Transaction not found or could not be updated' });
+    }
+    res.json(updatedTransaction);
+  } catch (error) {
+    next(error);
+  }
+};
 
 module.exports = {
-  updateTransactionStatus,
-  createTransaction
+  createTransaction,
+  getAllTransactions,
+  getTransactionById,
+  updateTransactionStatus
 };

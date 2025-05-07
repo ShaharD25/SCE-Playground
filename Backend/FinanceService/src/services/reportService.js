@@ -1,21 +1,33 @@
-const pool = require('../data-access/db');
+const {
+  insertReport,
+  fetchAllReports,
+  fetchReportById,
+  updateReportData
+} = require('../data-access/db'); // Accessing the DB layer
 
-// Service to fetch monthly income report
-async function getMonthlyReportService(customer) {
-  const result = await pool.query(
-    'SELECT SUM(amount) AS total_income FROM invoices WHERE customer = $1 AND EXTRACT(MONTH FROM created_at) = EXTRACT(MONTH FROM CURRENT_DATE)',
-    [customer]
-  );
-  return result.rows[0];
-}
+// Service: Create a new financial report
+const createReportService = async (data) => {
+  return await insertReport(data);
+};
 
-// Service to fetch overall financial summary
-async function getOverviewReportService(customer) {
-  const result = await pool.query(
-    'SELECT SUM(amount) AS total_income FROM invoices WHERE customer = $1',
-    [customer]
-  );
-  return result.rows[0];
-}
+// Service: Get all financial reports
+const getAllReportsService = async () => {
+  return await fetchAllReports();
+};
 
-module.exports = { getMonthlyReportService, getOverviewReportService };
+// Service: Get a single report by ID
+const getReportByIdService = async (id) => {
+  return await fetchReportById(id);
+};
+
+// Service: Update report data (e.g., fix or add details)
+const updateReportService = async (id, updatedData) => {
+  return await updateReportData(id, updatedData);
+};
+
+module.exports = {
+  createReportService,
+  getAllReportsService,
+  getReportByIdService,
+  updateReportService
+};
