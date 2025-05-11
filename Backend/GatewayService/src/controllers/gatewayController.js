@@ -33,10 +33,7 @@ const forwardAuthRequests = async (req, res, next) => {
 const forwardFinanceRequests = async (req, res, next) => {
   try {
     const financeServiceUrl = process.env.FINANCE_SERVICE_URL;
-    const path = req.originalUrl.replace('/finance', '');
-    const url = `${financeServiceUrl}${path}`;
-
-    console.log(`Forwarding FINANCE request to: ${url}`);
+    const url = `${financeServiceUrl}${req.originalUrl.replace('/finance', '')}`;  // הסרת "/finance"
 
     const response = await axios({
       method: req.method,
@@ -45,16 +42,16 @@ const forwardFinanceRequests = async (req, res, next) => {
       headers: { 'Content-Type': 'application/json' },
     });
 
-    console.log('Finance service response:', response.data);
-    return res.status(response.status).json(response.data);
+    res.status(response.status).json(response.data);
   } catch (error) {
-    console.error('Error forwarding to Finance service:', error.message);
+    console.error('Error while forwarding to Finance Service:', error.message);
     if (error.response) {
       return res.status(error.response.status).json(error.response.data);
     }
     return next(error);
   }
 };
+
 
 // ─── PING ─────────────────────────────────────────────
 const ping = async (req, res, next) => {
