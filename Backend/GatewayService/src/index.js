@@ -10,11 +10,11 @@ const PORT = process.env.PORT || 4000;
 
 
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://sce-frontend.onrender.com'],
+  origin: 'https://sce-frontend.onrender.com',
   credentials: true
 }));
 
-app.use(json());
+app.use(express.json());
 
 
 app.use('/', gatewayRoutes);
@@ -22,6 +22,6 @@ app.use('/', gatewayRoutes);
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Gateway service running on port: ${PORT}`);
 });
