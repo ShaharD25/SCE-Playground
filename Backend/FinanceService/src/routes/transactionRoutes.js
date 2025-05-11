@@ -1,26 +1,16 @@
-const express = require('express');
+import express from 'express';
+import {
+  createTransaction,
+  getAllTransactions,
+  getTransactionById,
+  updateTransactionStatus
+} from '../controllers/transactionController.js';
+
 const router = express.Router();
 
-const {
-  createTransaction,
-  updateTransactionStatus,
-  getAllTransactions,
-  getTransactionById
-} = require('../controllers/transactionController');
+router.post('/', createTransaction);
+router.get('/', getAllTransactions);
+router.get('/:id', getTransactionById);
+router.put('/:id/status', updateTransactionStatus);
 
-// Middleware placeholder – currently does not enforce authentication
-const authMiddleware = require('../../middleware/authMiddleware');
-
-// Create a new transaction (e.g., after a user action or purchase)
-router.post('/transactions', authMiddleware, createTransaction);
-
-// Update the status of a specific transaction (e.g., mark as paid)
-router.patch('/:id', authMiddleware, updateTransactionStatus);
-
-// Retrieve all transactions
-router.get('/', authMiddleware, getAllTransactions);
-
-// Retrieve a specific transaction by its ID
-router.get('/:id', authMiddleware, getTransactionById);
-
-module.exports = router;
+export default router;
