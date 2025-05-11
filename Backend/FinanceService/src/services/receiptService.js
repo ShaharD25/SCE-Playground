@@ -6,24 +6,16 @@ const {
 } = require('../data-access/db'); // Accessing DB layer
 
 // Service: Create a new receipt
-const createReceiptService = async (data) => {
-  return await insertReceipt(data);
-};
+const createReceiptService = async (data) => await insertReceipt(data);
 
 // Service: Get all receipts
-const getAllReceiptsService = async () => {
-  return await fetchAllReceipts();
-};
+const getAllReceiptsService = async () => await fetchAllReceipts();
 
 // Service: Get a receipt by its ID
-const getReceiptByIdService = async (id) => {
-  return await fetchReceiptById(id);
-};
+const getReceiptByIdService = async (id) => await fetchReceiptById(id);
 
 // Service: Update a receipt with new data
-const updateReceiptService = async (id, newData) => {
-  return await updateReceiptData(id, newData);
-};
+const updateReceiptService = async (id, newData) => await updateReceiptData(id, newData);
 
 module.exports = {
   createReceiptService,

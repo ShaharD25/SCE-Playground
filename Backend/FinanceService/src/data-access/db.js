@@ -28,20 +28,20 @@ async function insertTransaction(data) {
 
 // Get all transactions
 async function fetchAllTransactions() {
-  const result = await pool.query(`SELECT * FROM transactions`);
+  const result = await pool.query('SELECT * FROM transactions');
   return result.rows;
 }
 
 // Get transaction by ID
 async function fetchTransactionById(id) {
-  const result = await pool.query(`SELECT * FROM transactions WHERE id = $1`, [id]);
+  const result = await pool.query('SELECT * FROM transactions WHERE id = $1', [id]);
   return result.rows[0];
 }
 
 // Update transaction status
 async function changeTransactionStatus(id, status) {
   const result = await pool.query(
-    `UPDATE transactions SET status = $1 WHERE id = $2 RETURNING *`,
+    'UPDATE transactions SET status = $1 WHERE id = $2 RETURNING *',
     [status, id]
   );
   return result.rows[0];
@@ -65,20 +65,20 @@ async function insertInvoice(data) {
 
 // Get all invoices
 async function fetchAllInvoices() {
-  const result = await pool.query(`SELECT * FROM invoices`);
+  const result = await pool.query('SELECT * FROM invoices');
   return result.rows;
 }
 
 // Get invoice by ID
 async function fetchInvoiceById(id) {
-  const result = await pool.query(`SELECT * FROM invoices WHERE id = $1`, [id]);
+  const result = await pool.query('SELECT * FROM invoices WHERE id = $1', [id]);
   return result.rows[0];
 }
 
 // Update invoice status
 async function changeInvoiceStatus(id, status) {
   const result = await pool.query(
-    `UPDATE invoices SET status = $1 WHERE id = $2 RETURNING *`,
+    'UPDATE invoices SET status = $1 WHERE id = $2 RETURNING *',
     [status, id]
   );
   return result.rows[0];
@@ -102,13 +102,13 @@ async function insertReceipt(data) {
 
 // Get all receipts
 async function fetchAllReceipts() {
-  const result = await pool.query(`SELECT * FROM receipts`);
+  const result = await pool.query('SELECT * FROM receipts');
   return result.rows;
 }
 
 // Get receipt by ID
 async function fetchReceiptById(id) {
-  const result = await pool.query(`SELECT * FROM receipts WHERE id = $1`, [id]);
+  const result = await pool.query('SELECT * FROM receipts WHERE id = $1', [id]);
   return result.rows[0];
 }
 
@@ -116,7 +116,7 @@ async function fetchReceiptById(id) {
 async function updateReceiptData(id, data) {
   const { customer, transaction_id } = data;
   const result = await pool.query(
-    `UPDATE receipts SET customer = $1, transaction_id = $2 WHERE id = $3 RETURNING *`,
+    'UPDATE receipts SET customer = $1, transaction_id = $2 WHERE id = $3 RETURNING *',
     [customer, transaction_id, id]
   );
   return result.rows[0];
@@ -140,13 +140,13 @@ async function insertReport(data) {
 
 // Get all reports
 async function fetchAllReports() {
-  const result = await pool.query(`SELECT * FROM reports`);
+  const result = await pool.query('SELECT * FROM reports');
   return result.rows;
 }
 
 // Get report by ID
 async function fetchReportById(id) {
-  const result = await pool.query(`SELECT * FROM reports WHERE id = $1`, [id]);
+  const result = await pool.query('SELECT * FROM reports WHERE id = $1', [id]);
   return result.rows[0];
 }
 
@@ -154,7 +154,7 @@ async function fetchReportById(id) {
 async function updateReportData(id, data) {
   const { title, content } = data;
   const result = await pool.query(
-    `UPDATE reports SET title = $1, content = $2 WHERE id = $3 RETURNING *`,
+    'UPDATE reports SET title = $1, content = $2 WHERE id = $3 RETURNING *',
     [title, content, id]
   );
   return result.rows[0];

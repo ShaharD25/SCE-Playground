@@ -6,24 +6,16 @@ const {
 } = require('../data-access/db'); // Data Access Layer
 
 // Service: Create a new transaction
-const createTransactionService = async (data) => {
-  return await insertTransaction(data);
-};
+const createTransactionService = async (data) => await insertTransaction(data);
 
 // Service: Get all transactions
-const getAllTransactionsService = async () => {
-  return await fetchAllTransactions();
-};
+const getAllTransactionsService = async () => await fetchAllTransactions();
 
 // Service: Get a transaction by its ID
-const getTransactionByIdService = async (id) => {
-  return await fetchTransactionById(id);
-};
+const getTransactionByIdService = async (id) => await fetchTransactionById(id);
 
 // Service: Update the status of a transaction
-const updateTransactionStatusService = async (id, status) => {
-  return await changeTransactionStatus(id, status);
-};
+const updateTransactionStatusService = async (id, status) => await changeTransactionStatus(id, status);
 
 module.exports = {
   createTransactionService,
