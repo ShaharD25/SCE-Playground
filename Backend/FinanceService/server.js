@@ -15,7 +15,7 @@ app.use('/invoices', invoiceRoutes);
 console.log('invoiceRoutes loaded');
 
 const transactionRoutes = require('./src/routes/transactionRoutes');
-app.use('/transactions', transactionRoutes);
+app.use('/finance/transactions', transactionRoutes);
 console.log('transactionRoutes loaded');
 
 const receiptRoutes = require('./src/routes/receiptRoutes');
