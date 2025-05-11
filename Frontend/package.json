@@ -5,11 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "start": "vite --host",
+    "start": "vite preview --port 4173 --host",
     "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "test": "jest"
+    "preview": "vite preview"
+
   },
   "jest": {
     "testEnvironment": "jsdom",
