@@ -33,15 +33,17 @@ const forwardAuthRequests = async (req, res, next) => {
 const forwardFinanceRequests = async (req, res, next) => {
   try {
     const financeServiceUrl = process.env.FINANCE_SERVICE_URL;
-    const path = req.originalUrl.replace('/finance', '');  // מסיר את "/finance"
+    const path = req.originalUrl.replace('/finance', '');  
     const url = `${financeServiceUrl}${path}`;
 
+    console.log('Before axios call to:', url);
     const response = await axios({
       method: req.method,
       url,
       data: req.body,
       headers: { 'Content-Type': 'application/json' },
     });
+    console.log('Success from finance:', response.data);
 
     res.status(response.status).json(response.data);
   } catch (error) {
