@@ -33,7 +33,8 @@ const forwardAuthRequests = async (req, res, next) => {
 const forwardFinanceRequests = async (req, res, next) => {
   try {
     const financeServiceUrl = process.env.FINANCE_SERVICE_URL;
-    const url = `${financeServiceUrl}${req.originalUrl.replace('/finance', '')}`;  // הסרת "/finance"
+    const path = req.originalUrl.replace('/finance', '');  // מסיר את "/finance"
+    const url = `${financeServiceUrl}${path}`;
 
     const response = await axios({
       method: req.method,
@@ -51,6 +52,7 @@ const forwardFinanceRequests = async (req, res, next) => {
     return next(error);
   }
 };
+
 
 
 // ─── PING ─────────────────────────────────────────────
