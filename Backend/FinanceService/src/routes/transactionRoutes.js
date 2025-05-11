@@ -12,7 +12,7 @@ const {
 const authMiddleware = require('../../middleware/authMiddleware');
 
 // Create a new transaction (e.g., after a user action or purchase)
-router.post('/', authMiddleware, createTransaction);
+router.post('/transactions', authMiddleware, createTransaction);
 
 // Update the status of a specific transaction (e.g., mark as paid)
 router.patch('/:id', authMiddleware, updateTransactionStatus);
