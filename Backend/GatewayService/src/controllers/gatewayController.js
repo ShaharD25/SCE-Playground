@@ -34,7 +34,9 @@ const forwardFinanceRequests = async (req, res, next) => {
   try {
     const financeServiceUrl = process.env.FINANCE_SERVICE_URL;
     const path = req.originalUrl.replace('/finance', '');  
-    const url = `${process.env.financeServiceUrl}${path}`;
+    const url = `${financeServiceUrl}${path}`;
+    console.log(' Final URL being requested:', url);
+
 
     console.log('Before axios call to:', url);
     const response = await axios({
