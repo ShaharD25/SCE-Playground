@@ -54,6 +54,15 @@ export async function fetchReceiptById(id) {
   return result.rows[0];
 }
 
+export async function changeReceiptStatus(id, status) {
+  const result = await pool.query(
+    'UPDATE receipts SET status = $1 WHERE id = $2 RETURNING *',
+    [status, id]
+  );
+  return result.rows[0];
+}
+
+
 // ----- REPORTS -----
 export async function insertReport(data) {
   const { title, content } = data;
@@ -73,6 +82,16 @@ export async function fetchReportById(id) {
   const result = await pool.query('SELECT * FROM reports WHERE id = $1', [id]);
   return result.rows[0];
 }
+export async function changeReportStatus(id, status) {
+  const result = await pool.query(
+    'UPDATE reports SET status = $1 WHERE id = $2 RETURNING *',
+    [status, id]
+  );
+  return result.rows[0];
+}
+
+
+
 
 // ----- TRANSACTIONS -----
 export async function insertTransaction(data) {
