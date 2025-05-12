@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import express from 'express';
 import {
   createReport,
   getAllReports,
@@ -6,7 +6,7 @@ import {
   updateReportStatus
 } from '../controllers/reportController.js';
 
-const router = Router();
+const router = express.Router();
 
 router.post('/', createReport);
 router.get('/', getAllReports);

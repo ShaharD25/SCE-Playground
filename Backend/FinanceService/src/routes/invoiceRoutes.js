@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import express from 'express';
 import {
   createInvoice,
   getAllInvoices,
@@ -6,7 +6,7 @@ import {
   updateInvoiceStatus
 } from '../controllers/invoiceController.js';
 
-const router = Router();
+const router = express.Router();
 
 router.post('/', createInvoice);
 router.get('/', getAllInvoices);

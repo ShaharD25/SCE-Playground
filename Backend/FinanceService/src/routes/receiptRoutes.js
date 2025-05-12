@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import express from 'express';
 import {
   createReceipt,
   getAllReceipts,
@@ -6,7 +6,7 @@ import {
   updateReceiptStatus
 } from '../controllers/receiptController.js';
 
-const router = Router();
+const router = express.Router();
 
 router.post('/', createReceipt);
 router.get('/', getAllReceipts);

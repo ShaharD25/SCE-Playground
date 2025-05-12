@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import express from 'express';
 import {
   createTransaction,
   getAllTransactions,
@@ -6,7 +6,7 @@ import {
   updateTransactionStatus
 } from '../controllers/transactionController.js';
 
-const router = Router();
+const router = express.Router();
 
 router.get('/ping', (req, res) => res.send('pong'));
 
