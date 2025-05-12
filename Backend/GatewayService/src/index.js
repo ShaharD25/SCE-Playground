@@ -2,7 +2,7 @@
 import 'dotenv/config';
 import express, { json } from 'express';
 import { errorHandler } from './middleware/errorHandler.js';
-import gatewayRoutes from './routes/gatewayRoutes.js';
+import financeRoutes from './routes/gatewayRoutes.js';
 import cors from 'cors';
 
 const app = express();
@@ -17,7 +17,7 @@ app.use(cors({
 app.use(express.json());
 
 
-app.use('/finance', gatewayRoutes);
+app.use('/finance', financeRoutes);
 
 
 app.use(errorHandler);
