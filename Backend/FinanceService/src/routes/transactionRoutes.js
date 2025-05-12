@@ -1,4 +1,3 @@
-// transactionRoutes.js
 const express = require('express');
 const {
   createTransaction,
@@ -8,8 +7,8 @@ const {
 } = require('../controllers/transactionController');
 
 const router = express.Router();
-router.get('/ping', (req, res) => res.send('pong'));
 
+router.get('/ping', (req, res) => res.send('pong'));
 
 router.post('/', createTransaction);
 router.get('/', getAllTransactions);
@@ -17,4 +16,5 @@ router.get('/:id', getTransactionById);
 router.put('/:id/status', updateTransactionStatus);
 
 module.exports = router;
+
 
