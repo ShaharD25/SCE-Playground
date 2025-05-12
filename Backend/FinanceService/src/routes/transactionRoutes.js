@@ -1,12 +1,12 @@
-const express = require('express');
-const {
+import { Router } from 'express';
+import {
   createTransaction,
   getAllTransactions,
   getTransactionById,
   updateTransactionStatus
-} = require('../controllers/transactionController');
+} from '../controllers/transactionController.js';
 
-const router = express.Router();
+const router = Router();
 
 router.get('/ping', (req, res) => res.send('pong'));
 
@@ -15,6 +15,7 @@ router.get('/', getAllTransactions);
 router.get('/:id', getTransactionById);
 router.put('/:id/status', updateTransactionStatus);
 
-module.exports = router;
+export default router;
+
 
 

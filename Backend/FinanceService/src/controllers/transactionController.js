@@ -1,59 +1,49 @@
-const {
+import {
   createTransactionService,
   getAllTransactionsService,
   getTransactionByIdService,
   updateTransactionStatusService
-} = require('../services/transactionService');
+} from '../services/transactionService.js';
 
-// Create a new transaction
-const createTransaction = async (req, res, next) => {
+export const createTransaction = async (req, res, next) => {
   try {
-    const transaction = await createTransactionService(req.body);
-    res.status(201).json(transaction);
+    const result = await createTransactionService(req.body);
+    res.status(201).json(result);
   } catch (error) {
     next(error);
   }
 };
 
-// Get all transactions
-const getAllTransactions = async (req, res, next) => {
+export const getAllTransactions = async (req, res, next) => {
   try {
     const transactions = await getAllTransactionsService();
-    res.json(transactions);
+    res.status(200).json(transactions);
   } catch (error) {
     next(error);
   }
 };
 
-// Get a specific transaction by ID
-const getTransactionById = async (req, res, next) => {
+export const getTransactionById = async (req, res, next) => {
   try {
-    const transaction = await getTransactionByIdService(req.params.id);
-    if (!transaction) {
-      return res.status(404).json({ message: 'Transaction not found' });
+    const { id } = req.params;
+    const transaction = await getTransactionByIdService(id);
+    if (transaction) {
+      res.status(200).json(transaction);
+    } else {
+      res.status(404).json({ message: 'Transaction not found' });
     }
-    res.json(transaction);
   } catch (error) {
     next(error);
   }
 };
 
-// Update the status of a transaction
-const updateTransactionStatus = async (req, res, next) => {
+export const updateTransactionStatus = async (req, res, next) => {
   try {
-    const updatedTransaction = await updateTransactionStatusService(req.params.id, req.body.status);
-    if (!updatedTransaction) {
-      return res.status(404).json({ message: 'Transaction not found or could not be updated' });
-    }
-    res.json(updatedTransaction);
+    const { id } = req.params;
+    const { status } = req.body;
+    const updated = await updateTransactionStatusService(id, status);
+    res.status(200).json(updated);
   } catch (error) {
     next(error);
   }
-};
-
-module.exports = {
-  createTransaction,
-  getAllTransactions,
-  getTransactionById,
-  updateTransactionStatus
 };

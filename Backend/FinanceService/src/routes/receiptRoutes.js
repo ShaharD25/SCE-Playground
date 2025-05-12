@@ -1,26 +1,16 @@
-const express = require('express');
-const router = express.Router();
-
-const {
+import { Router } from 'express';
+import {
   createReceipt,
   getAllReceipts,
   getReceiptById,
-  updateReceipt
-} = require('../controllers/receiptController');
+  updateReceiptStatus
+} from '../controllers/receiptController.js';
 
-// Middleware placeholder – currently does not enforce authentication
-const authMiddleware = require('../../middleware/authMiddleware');
+const router = Router();
 
-// Create a new receipt (usually after a transaction has been paid)
-router.post('/', authMiddleware, createReceipt);
+router.post('/', createReceipt);
+router.get('/', getAllReceipts);
+router.get('/:id', getReceiptById);
+router.put('/:id/status', updateReceiptStatus);
 
-// Retrieve all receipts from the system
-router.get('/', authMiddleware, getAllReceipts);
-
-// Retrieve a specific receipt using its unique ID
-router.get('/:id', authMiddleware, getReceiptById);
-
-// Update the content or details of a specific receipt
-router.patch('/:id', authMiddleware, updateReceipt);
-
-module.exports = router;
+export default router;

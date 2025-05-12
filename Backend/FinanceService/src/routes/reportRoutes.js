@@ -1,26 +1,16 @@
-const express = require('express');
-const router = express.Router();
-
-const {
+import { Router } from 'express';
+import {
   createReport,
   getAllReports,
   getReportById,
-  updateReport
-} = require('../controllers/reportController');
+  updateReportStatus
+} from '../controllers/reportController.js';
 
-// Middleware placeholder – does not perform any authentication
-const authMiddleware = require('../../middleware/authMiddleware');
+const router = Router();
 
-// Create a new financial report
-router.post('/', authMiddleware, createReport);
+router.post('/', createReport);
+router.get('/', getAllReports);
+router.get('/:id', getReportById);
+router.put('/:id/status', updateReportStatus);
 
-// Retrieve all reports
-router.get('/', authMiddleware, getAllReports);
-
-// Retrieve a single report by its ID
-router.get('/:id', authMiddleware, getReportById);
-
-// Update an existing report by its ID
-router.patch('/:id', authMiddleware, updateReport);
-
-module.exports = router;
+export default router;

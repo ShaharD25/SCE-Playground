@@ -1,25 +1,11 @@
-const {
+import {
   insertReport,
   fetchAllReports,
   fetchReportById,
-  updateReportData
-} = require('../data-access/db'); // Accessing the DB layer
+  changeReportStatus
+} from '../data-access/db.js';
 
-// Service: Create a new financial report
-const createReportService = async (data) => await insertReport(data);
-
-// Service: Get all financial reports
-const getAllReportsService = async () => await fetchAllReports();
-
-// Service: Get a single report by ID
-const getReportByIdService = async (id) => await fetchReportById(id);
-
-// Service: Update report data (e.g., fix or add details)
-const updateReportService = async (id, updatedData) => await updateReportData(id, updatedData);
-
-module.exports = {
-  createReportService,
-  getAllReportsService,
-  getReportByIdService,
-  updateReportService
-};
+export const createReportService = async (data) => await insertReport(data);
+export const getAllReportsService = async () => await fetchAllReports();
+export const getReportByIdService = async (id) => await fetchReportById(id);
+export const updateReportStatusService = async (id, status) => await changeReportStatus(id, status);

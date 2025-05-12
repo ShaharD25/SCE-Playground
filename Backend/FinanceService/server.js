@@ -3,7 +3,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 
 import invoiceRoutes from './src/routes/invoiceRoutes.js';
-const transactionRoutes = require('./src/routes/transactionRoutes');
+import transactionRoutes from './src/routes/transactionRoutes.js';
 import receiptRoutes from './src/routes/receiptRoutes.js';
 import reportRoutes from './src/routes/reportRoutes.js';
 

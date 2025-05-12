@@ -1,59 +1,46 @@
-const {
+import {
   createReceiptService,
   getAllReceiptsService,
   getReceiptByIdService,
-  updateReceiptService
-} = require('../services/receiptService');
+  updateReceiptStatusService
+} from '../services/receiptService.js';
 
-// Create a new receipt (usually after a transaction is completed)
-const createReceipt = async (req, res, next) => {
+export const createReceipt = async (req, res) => {
   try {
     const receipt = await createReceiptService(req.body);
     res.status(201).json(receipt);
   } catch (error) {
-    next(error);
+    console.error('Error creating receipt:', error);
+    res.status(500).json({ message: 'Failed to create receipt' });
   }
 };
 
-// Retrieve all receipts from the database
-const getAllReceipts = async (req, res, next) => {
+export const getAllReceipts = async (_req, res) => {
   try {
     const receipts = await getAllReceiptsService();
-    res.json(receipts);
+    res.status(200).json(receipts);
   } catch (error) {
-    next(error);
+    console.error('Error fetching receipts:', error);
+    res.status(500).json({ message: 'Failed to fetch receipts' });
   }
 };
 
-// Retrieve a specific receipt by its ID
-const getReceiptById = async (req, res, next) => {
+export const getReceiptById = async (req, res) => {
   try {
     const receipt = await getReceiptByIdService(req.params.id);
-    if (!receipt) {
-      return res.status(404).json({ message: 'Receipt not found' });
-    }
-    res.json(receipt);
+    res.status(200).json(receipt);
   } catch (error) {
-    next(error);
+    console.error('Error fetching receipt by ID:', error);
+    res.status(500).json({ message: 'Failed to fetch receipt' });
   }
 };
 
-// Update an existing receipt (e.g., correct the content or status)
-const updateReceipt = async (req, res, next) => {
+export const updateReceiptStatus = async (req, res) => {
   try {
-    const updatedReceipt = await updateReceiptService(req.params.id, req.body);
-    if (!updatedReceipt) {
-      return res.status(404).json({ message: 'Receipt not found or could not be updated' });
-    }
-    res.json(updatedReceipt);
+    const updatedReceipt = await updateReceiptStatusService(req.params.id, req.body.status);
+    res.status(200).json(updatedReceipt);
   } catch (error) {
-    next(error);
+    console.error('Error updating receipt status:', error);
+    res.status(500).json({ message: 'Failed to update receipt status' });
   }
-};
-
-module.exports = {
-  createReceipt,
-  getAllReceipts,
-  getReceiptById,
-  updateReceipt
 };

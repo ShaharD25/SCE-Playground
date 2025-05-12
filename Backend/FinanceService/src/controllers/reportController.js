@@ -1,59 +1,46 @@
-const {
+import {
   createReportService,
   getAllReportsService,
   getReportByIdService,
-  updateReportService
-} = require('../services/reportService');
+  updateReportStatusService
+} from '../services/reportService.js';
 
-// Create a new financial report (e.g., monthly income & expenses)
-const createReport = async (req, res, next) => {
+export const createReport = async (req, res) => {
   try {
     const report = await createReportService(req.body);
     res.status(201).json(report);
   } catch (error) {
-    next(error);
+    console.error('Error creating report:', error);
+    res.status(500).json({ message: 'Failed to create report' });
   }
 };
 
-// Retrieve all reports from the system
-const getAllReports = async (req, res, next) => {
+export const getAllReports = async (_req, res) => {
   try {
     const reports = await getAllReportsService();
-    res.json(reports);
+    res.status(200).json(reports);
   } catch (error) {
-    next(error);
+    console.error('Error fetching reports:', error);
+    res.status(500).json({ message: 'Failed to fetch reports' });
   }
 };
 
-// Retrieve a specific report by its ID
-const getReportById = async (req, res, next) => {
+export const getReportById = async (req, res) => {
   try {
     const report = await getReportByIdService(req.params.id);
-    if (!report) {
-      return res.status(404).json({ message: 'Report not found' });
-    }
-    res.json(report);
+    res.status(200).json(report);
   } catch (error) {
-    next(error);
+    console.error('Error fetching report by ID:', error);
+    res.status(500).json({ message: 'Failed to fetch report' });
   }
 };
 
-// Update an existing report (e.g., add new data or fix issues)
-const updateReport = async (req, res, next) => {
+export const updateReportStatus = async (req, res) => {
   try {
-    const updatedReport = await updateReportService(req.params.id, req.body);
-    if (!updatedReport) {
-      return res.status(404).json({ message: 'Report not found or could not be updated' });
-    }
-    res.json(updatedReport);
+    const updatedReport = await updateReportStatusService(req.params.id, req.body.status);
+    res.status(200).json(updatedReport);
   } catch (error) {
-    next(error);
+    console.error('Error updating report status:', error);
+    res.status(500).json({ message: 'Failed to update report status' });
   }
-};
-
-module.exports = {
-  createReport,
-  getAllReports,
-  getReportById,
-  updateReport
 };
