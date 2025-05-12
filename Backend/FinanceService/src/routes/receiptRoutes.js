@@ -8,9 +8,9 @@ import {
 
 const router = express.Router();
 
-router.post('/', createReceipt);
-router.get('/', getAllReceipts);
-router.get('/:id', getReceiptById);
-router.put('/:id/status', updateReceiptStatus);
+router.post('/receipt', createReceipt);
+router.get('/receipt', getAllReceipts);
+router.get('/receipt:id', getReceiptById);
+router.put('/receipt:id/status', updateReceiptStatus);
 
 export default router;

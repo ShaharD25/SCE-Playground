@@ -8,9 +8,9 @@ import {
 
 const router = express.Router();
 
-router.post('/', createReport);
-router.get('/', getAllReports);
-router.get('/:id', getReportById);
-router.put('/:id/status', updateReportStatus);
+router.post('/report', createReport);
+router.get('/report', getAllReports);
+router.get('/report:id', getReportById);
+router.put('/report:id/status', updateReportStatus);
 
 export default router;

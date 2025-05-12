@@ -8,9 +8,9 @@ import {
 
 const router = express.Router();
 
-router.post('/', createInvoice);
-router.get('/', getAllInvoices);
-router.get('/:id', getInvoiceById);
-router.put('/:id/status', updateInvoiceStatus);
+router.post('/invoice', createInvoice);
+router.get('/invoice', getAllInvoices);
+router.get('/invoice:id', getInvoiceById);
+router.put('/invoice:id/status', updateInvoiceStatus);
 
 export default router;

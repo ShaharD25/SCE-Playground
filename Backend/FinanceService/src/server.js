@@ -1,11 +1,10 @@
 // server.js
 import express from 'express';
 import dotenv from 'dotenv';
-
-import invoiceRoutes from './src/routes/invoiceRoutes.js';
-import transactionRoutes from './src/routes/transactionRoutes.js';
-import receiptRoutes from './src/routes/receiptRoutes.js';
-import reportRoutes from './src/routes/reportRoutes.js';
+import invoiceRoutes from './routes/invoiceRoutes.js';
+import transactionRoutes from './routes/transactionRoutes.js';
+import receiptRoutes from './routes/receiptRoutes.js';
+import reportRoutes from './routes/reportRoutes.js';
 
 dotenv.config();
 
@@ -16,16 +15,16 @@ app.use(express.json());
 
 console.log('loading routes...');
 
-app.use('/invoices', invoiceRoutes);
+app.use('/', invoiceRoutes);
 console.log('invoiceRoutes loaded');
 
-app.use('/transactions', transactionRoutes);
+app.use('/', transactionRoutes);
 console.log('transactionRoutes loaded');
 
-app.use('/receipts', receiptRoutes);
+app.use('/', receiptRoutes);
 console.log('receiptRoutes loaded');
 
-app.use('/reports', reportRoutes);
+app.use('/', reportRoutes);
 console.log('reportRoutes loaded');
 
 const PORT = process.env.PORT || 4002;
