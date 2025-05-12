@@ -18,7 +18,7 @@ function FinanceModulePage() {
         description,
       });
 
-      const response = await api.post('/finance/transactions', {
+      const response = await api.post('/finance/transaction', {
         customer_id: Number(customerId),
         amount: Number(amount),
         status,
