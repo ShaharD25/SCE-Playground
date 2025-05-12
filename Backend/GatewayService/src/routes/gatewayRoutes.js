@@ -1,4 +1,4 @@
-import { express} from 'express';
+import express from 'express';
 import { forwardAuthRequests, forwardFinanceRequests, ping } from '../controllers/gatewayController.js';
 const router = express.Router();
 
