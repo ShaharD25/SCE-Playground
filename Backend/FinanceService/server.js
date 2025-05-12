@@ -1,33 +1,34 @@
-console.log('server.js started');
+// server.js
+import express from 'express';
+import dotenv from 'dotenv';
 
-const express = require('express');
-const dotenv = require('dotenv');
+import invoiceRoutes from './src/routes/invoiceRoutes.js';
+import transactionRoutes from './src/routes/transactionRoutes.js';
+import receiptRoutes from './src/routes/receiptRoutes.js';
+import reportRoutes from './src/routes/reportRoutes.js';
 
 dotenv.config();
+
+console.log('server.js started');
 
 const app = express();
 app.use(express.json());
 
 console.log('loading routes...');
 
-const invoiceRoutes = require('./src/routes/invoiceRoutes');
 app.use('/invoices', invoiceRoutes);
 console.log('invoiceRoutes loaded');
 
-const transactionRoutes = require('./src/routes/transactionRoutes');
 app.use('/transactions', transactionRoutes);
 console.log('transactionRoutes loaded');
 
-const receiptRoutes = require('./src/routes/receiptRoutes');
 app.use('/receipts', receiptRoutes);
 console.log('receiptRoutes loaded');
 
-const reportRoutes = require('./src/routes/reportRoutes');
 app.use('/reports', reportRoutes);
 console.log('reportRoutes loaded');
 
 const PORT = process.env.PORT || 4002;
-
 app.listen(PORT, () => {
   console.log(`FinanceService is running on port ${PORT}`);
 });

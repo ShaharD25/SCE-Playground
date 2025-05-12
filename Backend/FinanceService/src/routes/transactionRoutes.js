@@ -8,6 +8,8 @@ const {
 } = require('../controllers/transactionController');
 
 const router = express.Router();
+router.get('/ping', (req, res) => res.send('pong'));
+
 
 router.post('/', createTransaction);
 router.get('/', getAllTransactions);
