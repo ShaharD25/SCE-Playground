@@ -25,6 +25,6 @@ app.use('/', authRoutes);
 // Error handling
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`Authentication service running on port ${PORT}`);
+app.listen(process.env.PORT || 4001, '0.0.0.0', () => {
+  console.log(`Auth service running on port: ${PORT}`);
 });

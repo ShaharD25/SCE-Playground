@@ -27,7 +27,7 @@ console.log('receiptRoutes loaded');
 app.use('/', reportRoutes);
 console.log('reportRoutes loaded');
 
-const PORT = process.env.PORT || 4002;
-app.listen(PORT, () => {
-  console.log(`FinanceService is running on port ${PORT}`);
+app.listen(process.env.PORT || 4002, '0.0.0.0', () => {
+  console.log('FinanceService is running on port 4002');
 });
+
