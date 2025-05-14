@@ -1,6 +1,6 @@
 // gateway-service/index.js
 import 'dotenv/config';
-import express, { json } from 'express';
+import express from 'express';
 import { errorHandler } from './middleware/errorHandler.js';
 import financeRoutes from './routes/gatewayRoutes.js';
 import cors from 'cors';

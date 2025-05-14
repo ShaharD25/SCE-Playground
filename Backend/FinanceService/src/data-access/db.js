@@ -2,7 +2,7 @@ import pkg from 'pg';
 const { Pool } = pkg;
 
 const pool = new Pool({
-  connectionString: process.env.POSTGRES_URI,
+  connectionString: process.env.DB_CONNECTION_STRING,
   ssl: { rejectUnauthorized: false },
 });
 
@@ -89,8 +89,6 @@ export async function changeReportStatus(id, status) {
   );
   return result.rows[0];
 }
-
-
 
 
 // ----- TRANSACTIONS -----
