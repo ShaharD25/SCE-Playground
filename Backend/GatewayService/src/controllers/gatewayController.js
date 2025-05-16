@@ -8,7 +8,6 @@ const forwardAuthRequests = async (req, res, next) => {
     const authServiceUrl = process.env.AUTH_SERVICE_URL;
     const path = req.originalUrl.replace('/auth', '');
     const url = `${authServiceUrl}${path}`;
-
     console.log(`Forwarding AUTH request to: ${url}`);
 
     const response = await axios.request({

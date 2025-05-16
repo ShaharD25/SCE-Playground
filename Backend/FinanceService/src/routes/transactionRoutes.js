@@ -10,10 +10,10 @@ const router = express.Router();
 
 router.get('/ping', (req, res) => res.send('pong'));
 
-router.post('/transaction', createTransaction);
-router.get('/transaction', getAllTransactions);
-router.get('/transaction:id', getTransactionById);
-router.put('/transaction:id/status', updateTransactionStatus);
+router.post('/', createTransaction);
+router.get('/', getAllTransactions);
+router.get('/:id', getTransactionById);
+router.put('/:id', updateTransactionStatus);
 
 export default router;
 

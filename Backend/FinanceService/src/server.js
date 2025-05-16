@@ -7,6 +7,8 @@ import receiptRoutes from './routes/receiptRoutes.js';
 import reportRoutes from './routes/reportRoutes.js';
 
 dotenv.config();
+console.log('DB connection string:', process.env.DB_CONNECTION_STRING);
+
 
 console.log('server.js started');
 
@@ -15,19 +17,21 @@ app.use(express.json());
 
 console.log('loading routes...');
 
-app.use('/', invoiceRoutes);
+app.use('/invoices', invoiceRoutes);
 console.log('invoiceRoutes loaded');
 
-app.use('/', transactionRoutes);
+app.use('/transaction', transactionRoutes);
 console.log('transactionRoutes loaded');
 
-app.use('/', receiptRoutes);
+app.use('/receipt', receiptRoutes);
 console.log('receiptRoutes loaded');
 
-app.use('/', reportRoutes);
+app.use('/report', reportRoutes);
 console.log('reportRoutes loaded');
 
-app.listen(process.env.PORT || 4002, '0.0.0.0', () => {
+app.listen(process.env.PORT || 4002, () => {
   console.log('FinanceService is running on port 4002');
 });
+
+
 
