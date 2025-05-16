@@ -1,11 +1,22 @@
 import React, { useContext } from 'react';
-import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link,
+  useNavigate
+} from 'react-router-dom';
+
 import HomePage from './pages/HomePage.jsx';
 import SignInPage from './pages/SignInPage.jsx';
 import SignUpPage from './pages/SignUpPage.jsx';
 import ProductsPage from './pages/ProductsPage.jsx';
 import ReportsPage from './pages/ReportsPage.jsx';
-import FinanceModulePage from './pages/FinanceModulePage.jsx'; 
+import FinanceModulePage from './pages/FinanceModulePage.jsx';
+import CreateTransactionPage from './pages/CreateTransactionPage.jsx';
+import ViewTransactionsPage from './pages/ViewTransactionsPage.jsx';
+import ManagementPage from './pages/ManagementPage.jsx';
+
 import { StoreProvider, StoreContext } from './store/StoreContext.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import './App.css';
@@ -46,7 +57,7 @@ function Navbar() {
           )}
           <Link to='/signup'>Sign Up</Link>
           <Link to='/products'>Products</Link>
-          <Link to='/finance-module'>Finance </Link>
+          <Link to='/finance-module'>Finance</Link>
         </div>
         {user && <div className='user-circle'>{userInitial}</div>}
       </div>
@@ -60,29 +71,52 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <div style={{ backgroundImage: 'url(/background.png)' }}>
-        <Routes>
-  <Route path='/' element={<HomePage />} />
-  <Route path='/signin' element={<SignInPage />} />
-  <Route path='/signup' element={<SignUpPage />} />
-  <Route path='/reports' element={<ReportsPage />} />
-  <Route
-    path='/products'
-    element={
-      <ProtectedRoute>
-        <ProductsPage />
-      </ProtectedRoute>
-    }
-  />
-  <Route
-    path='/finance-module'
-    element={
-      <ProtectedRoute>
-        <FinanceModulePage />
-      </ProtectedRoute>
-    }
-  />
-</Routes>
-
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/signin' element={<SignInPage />} />
+            <Route path='/signup' element={<SignUpPage />} />
+            <Route path='/reports' element={<ReportsPage />} />
+            <Route
+              path='/products'
+              element={
+                <ProtectedRoute>
+                  <ProductsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/finance-module'
+              element={
+                <ProtectedRoute>
+                  <FinanceModulePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/finance/create'
+              element={
+                <ProtectedRoute>
+                  <CreateTransactionPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/finance-module/view'
+              element={
+                <ProtectedRoute>
+                  <ViewTransactionsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/finance/management'
+              element={
+                <ProtectedRoute>
+                  <ManagementPage />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
         </div>
       </BrowserRouter>
     </StoreProvider>
@@ -90,4 +124,3 @@ function App() {
 }
 
 export default App;
-

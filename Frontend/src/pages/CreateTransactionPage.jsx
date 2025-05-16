@@ -1,0 +1,90 @@
+import React, { useState } from 'react';
+import api from '../services/api';
+
+function CreateTransactionPage() {
+  const [customerId, setCustomerId] = useState('');
+  const [amount, setAmount] = useState('');
+  const [status, setStatus] = useState('');
+  const [description, setDescription] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await api.post('/finance/transaction', {
+        customer_id: Number(customerId),
+        amount: Number(amount),
+        status,
+        description,
+      });
+
+      if (status.toLowerCase() === 'paid') {
+        alert('Receipt has been sent to your email');
+      } else {
+        alert('Transaction created successfully!');
+      }
+
+      // Clear form
+      setCustomerId('');
+      setAmount('');
+      setStatus('');
+      setDescription('');
+    } catch (error) {
+      console.error('Failed to create transaction:', error);
+      alert('Failed to create transaction');
+    }
+  };
+
+  return (
+    <div style={{ padding: '2rem' }}>
+      <h2>Create Transaction</h2>
+
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Customer ID:</label><br />
+          <input
+            type="number"
+            value={customerId}
+            onChange={(e) => setCustomerId(e.target.value)}
+            required
+          />
+        </div>
+
+        <div>
+          <label>Amount:</label><br />
+          <input
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            required
+          />
+        </div>
+
+        <div>
+          <label>Status:</label><br />
+          <input
+            type="text"
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            required
+          />
+        </div>
+
+        <div>
+          <label>Description:</label><br />
+          <input
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+        </div>
+
+        <br />
+        <button type="submit">Save Transaction</button>
+      </form>
+    </div>
+  );
+}
+
+export default CreateTransactionPage;
