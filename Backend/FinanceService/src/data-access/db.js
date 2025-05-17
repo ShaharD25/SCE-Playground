@@ -17,12 +17,25 @@ export const sequelize = new Sequelize(process.env.DB_CONNECTION_STRING, {
 
 // ----- INVOICES -----
 export async function insertInvoice(data) {
+  console.log('Trying to insert invoice:', data);
   const { customer_id, amount, status, description } = data;
-  const [result] = await sequelize.query(
-    'INSERT INTO invoices (customer_id, amount, status, description) VALUES ($1, $2, $3, $4) RETURNING *',
-    { bind: [customer_id, amount, status, description], type: sequelize.QueryTypes.INSERT }
-  );
-  return result[0];
+  
+
+  try {
+    const [result] = await sequelize.query(
+      'INSERT INTO invoices (customer_id, amount, status, description) VALUES ($1, $2, $3, $4) RETURNING *',
+      {
+        bind: [customer_id, amount, status, description],
+        type: sequelize.QueryTypes.INSERT,
+      }
+    );
+
+    console.log('Invoice inserted:', result);
+    return result[0];
+  } catch (err) {
+    console.error('Failed to insert invoice:', err);
+    throw err;
+  }
 }
 
 export async function fetchAllInvoices() {

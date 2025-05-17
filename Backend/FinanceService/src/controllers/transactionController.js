@@ -4,16 +4,24 @@ import {
   getTransactionByIdService,
   updateTransactionStatusService
 } from '../services/transactionService.js';
-
+import { createInvoiceService } from '../services/invoiceService.js'; 
 export const createTransaction = async (req, res, next) => {
   try {
     const result = await createTransactionService(req.body);
+
+    
+    await createInvoiceService({
+      customer_id: result.customer_id,
+      amount: result.amount,
+      status: result.status,
+      description: result.description
+    });
+
     res.status(201).json(result);
   } catch (error) {
     next(error);
   }
 };
-
 export const getAllTransactions = async (req, res, next) => {
   try {
     const transactions = await getAllTransactionsService();
