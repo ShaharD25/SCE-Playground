@@ -3,13 +3,15 @@ import {
   fetchAllTransactions,
   fetchTransactionById,
   changeTransactionStatus,
-  insertInvoice
+  insertInvoice,
+  insertReceipt
 } from '../data-access/db.js';
 
 
 export const createTransactionService = async (data) => {
   const transaction = await insertTransaction(data);
-  await insertInvoice(data); // 👈 יצירת חשבונית באופן אוטומטי אחרי יצירת עסקה
+  await insertInvoice(data); 
+  await insertReceipt(data);
   return transaction;
 };
 
