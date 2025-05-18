@@ -1,4 +1,3 @@
-// App.jsx
 import React, { useContext } from 'react';
 import {
   BrowserRouter,
@@ -17,7 +16,8 @@ import FinanceModulePage from './pages/FinanceModulePage.jsx';
 import CreateTransactionPage from './pages/CreateTransactionPage.jsx';
 import ViewTransactionsPage from './pages/ViewTransactionsPage.jsx';
 import ManagementPage from './pages/ManagementPage.jsx';
-import UpdateStatusPage from './pages/UpdateStatusPage.jsx'; // ✅ הוספה כאן
+import MonthlyReportPage from './pages/MonthlyReportPage.jsx'; // ✅ נוספה כאן
+import UpdateStatusPage from './pages/UpdateStatusPage.jsx';
 
 import { StoreProvider, StoreContext } from './store/StoreContext.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
@@ -115,6 +115,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <ManagementPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/finance/management/monthly'
+              element={
+                <ProtectedRoute>
+                  <MonthlyReportPage />
                 </ProtectedRoute>
               }
             />

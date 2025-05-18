@@ -3,29 +3,20 @@ import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 
 function ManagementPage() {
-  const [result, setResult] = useState('');
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const fetchIncome = async () => {
-    try {
-      setError('');
-      const response = await api.get('/finance/management/income');
-      setResult(`Total Income: ${response.data.total_income}`);
-    } catch (err) {
-      console.error(err);
-      setError('Failed to load income');
-    }
-  };
+  const [summary, setSummary] = useState(null);
+  const [error, setError] = useState('');
 
-  const fetchTransactionCount = async () => {
+  const fetchSummary = async () => {
     try {
+      const response = await api.get('/finance/report/summary');
+      setSummary(response.data);
       setError('');
-      const response = await api.get('/finance/management/count');
-      setResult(`Total Transactions: ${response.data.transaction_count}`);
     } catch (err) {
       console.error(err);
-      setError('Failed to load transaction count');
+      setError('Failed to load summary report');
+      setSummary(null);
     }
   };
 
@@ -33,20 +24,34 @@ function ManagementPage() {
     <div style={{ padding: '2rem' }}>
       <h2>Management Summary</h2>
 
-      <button onClick={fetchIncome}>Show Total Income</button>
-      <button onClick={fetchTransactionCount} style={{ marginLeft: '1rem' }}>
-        Show Transaction Count
-      </button>
-      <button onClick={() => navigate('/update-status')} style={{ marginLeft: '1rem' }}>
-        Update Transaction Status
-      </button>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '250px' }}>
+        <button onClick={() => navigate('/update-status')}>
+          Update Transaction Status
+        </button>
 
-      <div style={{ marginTop: '1rem' }}>
+        <button onClick={() => navigate('/finance/management/monthly')}>
+          Monthly Report
+        </button>
+
+        <button onClick={fetchSummary}>
+          Show Summary Report
+        </button>
+      </div>
+
+      <div style={{ marginTop: '2rem' }}>
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        {result && <p><strong>{result}</strong></p>}
+
+        {summary && (
+          <>
+            <p><strong>Total Transactions:</strong> {summary.transaction_count}</p>
+            <p><strong>Total Income:</strong> ₪ {summary.total_income}</p>
+            <p><strong>Average Payment:</strong> ₪ {summary.average_payment}</p>
+          </>
+        )}
       </div>
     </div>
   );
 }
 
 export default ManagementPage;
+
