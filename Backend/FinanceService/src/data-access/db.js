@@ -58,10 +58,10 @@ export async function changeInvoiceStatus(id, status) {
 
 // ----- RECEIPTS -----
 export async function insertReceipt(data) {
-  const { customer_id, amount, description, created_at } = data;
+  const { customer_id, amount,status, description, created_at } = data;
   const [result] = await sequelize.query(
     'INSERT INTO receipt (customer_id, amount, status, description, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-    { bind: [customer_id, amount, description, created_at] }
+    { bind: [customer_id, amount, status, description, created_at] }
   );
   return result[0];
 }
