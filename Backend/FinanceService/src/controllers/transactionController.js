@@ -8,7 +8,7 @@ import { createReceiptService } from '../services/receiptService.js';
 import { createInvoiceService } from '../services/invoiceService.js'; 
 export const createTransaction = async (req, res, next) => {
   try {
-    const result = await createTransactionService(req.body);
+    const result = await createTransactionService(req.body); 
 
     
     //await createInvoiceService({
