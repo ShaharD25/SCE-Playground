@@ -17,7 +17,7 @@ function CreateTransactionPage() {
         amount: Number(amount),
         status,
         description,
-        created_at: createdAt, // Send the selected date
+        created_at : createdAt 
       });
 
       if (status.toLowerCase() === 'paid') {

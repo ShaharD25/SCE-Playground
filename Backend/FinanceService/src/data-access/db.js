@@ -128,7 +128,7 @@ export async function insertTransaction(data) {
 }
 
 export async function fetchAllTransactions() {
-  const [result] = await sequelize.query('SELECT * FROM transactions');
+  const [result] = await sequelize.query('SELECT * FROM transaction');
   return result;
 }
 
