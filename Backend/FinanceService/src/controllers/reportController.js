@@ -58,9 +58,9 @@ export const getSummaryReport = async (_req, res) => {
 };
 
 export const getMonthlyReport = async (req, res) => {
-  const { month } = req.query;
-  if (!month) {
-    return res.status(400).json({ message: 'Month parameter is required in YYYY-MM format' });
+  const { year, month } = req.query;
+  if (!year || !month) {
+    return res.status(400).json({ message:'Year and month are required'});
   }
 
   try {
@@ -71,3 +71,5 @@ export const getMonthlyReport = async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch monthly report' });
   }
 };
+
+
