@@ -13,7 +13,7 @@ router.get('/ping', (req, res) => res.send('pong'));
 router.post('/', createTransaction);
 router.get('/', getAllTransactions);
 router.get('/:id', getTransactionById);
-router.put('/:id', updateTransactionStatus);
+router.put('/:id/status', updateTransactionStatus);
 
 export default router;
 

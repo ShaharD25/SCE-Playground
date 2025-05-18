@@ -4,18 +4,19 @@ import {
   getTransactionByIdService,
   updateTransactionStatusService
 } from '../services/transactionService.js';
+import { createReceiptService } from '../services/receiptService.js';
 import { createInvoiceService } from '../services/invoiceService.js'; 
 export const createTransaction = async (req, res, next) => {
   try {
     const result = await createTransactionService(req.body);
 
     
-    await createInvoiceService({
-      customer_id: result.customer_id,
-      amount: result.amount,
-      status: result.status,
-      description: result.description
-    });
+    //await createInvoiceService({
+    //customer_id: result.customer_id,
+    //amount: result.amount,
+    //status: result.status,
+    //description: result.description
+    //});
 
     res.status(201).json(result);
   } catch (error) {
@@ -49,9 +50,13 @@ export const updateTransactionStatus = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
-    const updated = await updateTransactionStatusService(id, status);
-    res.status(200).json(updated);
+    const updatedTransaction = await updateTransactionStatusService(id, status);
+    if (status === 'paid') {
+      await createReceiptService(updatedTransaction); 
+    }
+    res.status(200).json(updatedTransaction);
   } catch (error) {
-    next(error);
+    console.error('Error updating transaction status:', error);
+    res.status(500).json({ message: 'Failed to update transaction status' });
   }
 };
