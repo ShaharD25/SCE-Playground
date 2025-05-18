@@ -2,7 +2,9 @@ import {
   createReportService,
   getAllReportsService,
   getReportByIdService,
-  updateReportStatusService
+  updateReportStatusService,
+  getSummaryReportService,
+  getMonthlyReportService
 } from '../services/reportService.js';
 
 export const createReport = async (req, res) => {
@@ -42,5 +44,30 @@ export const updateReportStatus = async (req, res) => {
   } catch (error) {
     console.error('Error updating report status:', error);
     res.status(500).json({ message: 'Failed to update report status' });
+  }
+};
+
+export const getSummaryReport = async (_req, res) => {
+  try {
+    const report = await getSummaryReportService();
+    res.status(200).json(report);
+  } catch (err) {
+    console.error('Error fetching summary report:', err);
+    res.status(500).json({ message: 'Failed to fetch summary report' });
+  }
+};
+
+export const getMonthlyReport = async (req, res) => {
+  const { month } = req.query;
+  if (!month) {
+    return res.status(400).json({ message: 'Month parameter is required in YYYY-MM format' });
+  }
+
+  try {
+    const report = await getMonthlyReportService(month);
+    res.status(200).json(report);
+  } catch (err) {
+    console.error('Error fetching monthly report:', err);
+    res.status(500).json({ message: 'Failed to fetch monthly report' });
   }
 };
