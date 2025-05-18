@@ -141,7 +141,7 @@ export async function fetchTransactionById(id) {
 
 export async function changeTransactionStatus(id, status) {
   const [result] = await sequelize.query(
-    'UPDATE transactions SET status = $1 WHERE id = $2 RETURNING *',
+    'UPDATE transaction SET status = $1 WHERE id = $2 RETURNING *',
     { bind: [status, id] }
   );
   return result[0];
