@@ -122,7 +122,9 @@ export async function insertTransaction(data) {
   const { customer_id, amount, status, description, created_at } = data;
   const [result] = await sequelize.query(
     'INSERT INTO transaction (customer_id, amount, status, description, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-    { bind: [customer_id, amount, status, description, created_at] }
+    { bind: [customer_id, amount, status, description, created_at] , 
+      type: sequelize.QueryTypes.INSERT 
+    }
   );
   return result[0];
 }
