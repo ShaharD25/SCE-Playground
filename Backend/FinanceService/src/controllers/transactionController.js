@@ -46,14 +46,12 @@ export const getTransactionById = async (req, res, next) => {
   }
 };
 
-export const updateTransactionStatus = async (req, res, next) => {
+export const updateTransactionStatus = async (req, res) => {
   try {
-    const { id } = req.params;
-    const { status } = req.body;
-    const updatedTransaction = await updateTransactionStatusService(id, status);
-    if (status === 'paid') {
-      await createReceiptService(updatedTransaction); 
-    }
+    const updatedTransaction = await updateTransactionStatusService(
+      req.params.id,
+      req.body.status
+    );
     res.status(200).json(updatedTransaction);
   } catch (error) {
     console.error('Error updating transaction status:', error);

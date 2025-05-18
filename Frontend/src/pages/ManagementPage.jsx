@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 
 function ManagementPage() {
   const [result, setResult] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const fetchIncome = async () => {
     try {
@@ -34,6 +36,9 @@ function ManagementPage() {
       <button onClick={fetchIncome}>Show Total Income</button>
       <button onClick={fetchTransactionCount} style={{ marginLeft: '1rem' }}>
         Show Transaction Count
+      </button>
+      <button onClick={() => navigate('/update-status')} style={{ marginLeft: '1rem' }}>
+        Update Transaction Status
       </button>
 
       <div style={{ marginTop: '1rem' }}>
