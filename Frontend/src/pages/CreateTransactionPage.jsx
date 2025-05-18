@@ -6,6 +6,7 @@ function CreateTransactionPage() {
   const [amount, setAmount] = useState('');
   const [status, setStatus] = useState('');
   const [description, setDescription] = useState('');
+  const [createdAt, setCreatedAt] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,6 +17,7 @@ function CreateTransactionPage() {
         amount: Number(amount),
         status,
         description,
+        created_at: createdAt, // Send the selected date
       });
 
       if (status.toLowerCase() === 'paid') {
@@ -29,6 +31,7 @@ function CreateTransactionPage() {
       setAmount('');
       setStatus('');
       setDescription('');
+      setCreatedAt('');
     } catch (error) {
       console.error('Failed to create transaction:', error);
       alert('Failed to create transaction');
@@ -76,6 +79,16 @@ function CreateTransactionPage() {
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+        </div>
+
+        <div>
+          <label>Created At (YYYY-MM):</label><br />
+          <input
+            type="month"
+            value={createdAt}
+            onChange={(e) => setCreatedAt(e.target.value)}
             required
           />
         </div>
