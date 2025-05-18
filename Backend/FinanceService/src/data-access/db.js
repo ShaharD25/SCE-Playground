@@ -17,9 +17,8 @@ export const sequelize = new Sequelize(process.env.DB_CONNECTION_STRING, {
 
 // ----- INVOICES -----
 export async function insertInvoice(data) {
-  console.log('Trying to insert invoice:', data);
   const { customer_id, amount, status, description } = data;
-  
+  console.log('Trying to insert invoice:', data);
 
   try {
     const [result] = await sequelize.query(
@@ -62,7 +61,7 @@ export async function changeInvoiceStatus(id, status) {
 export async function insertReceipt(data) {
   const { customer_id, amount, description } = data;
   const [result] = await sequelize.query(
-    'INSERT INTO receipts (customer_id, amount, description) VALUES ($1, $2, $3) RETURNING *',
+    'INSERT INTO receipt (customer_id, amount, description) VALUES ($1, $2, $3) RETURNING *',
     { bind: [customer_id, amount, description] }
   );
   return result[0];
