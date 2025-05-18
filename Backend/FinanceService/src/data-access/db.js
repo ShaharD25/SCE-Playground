@@ -117,6 +117,30 @@ export async function changeReportStatus(id, status) {
   return result[0];
 }
 
+export async function fetchMonthlyReport(year, month) {
+  const [result] = await sequelize.query(`
+    SELECT * FROM transaction
+    WHERE EXTRACT(YEAR FROM created_at) = $1 AND EXTRACT(MONTH FROM created_at) = $2
+  `, {
+    bind: [year, month]
+  });
+
+  return result;
+}
+
+export async function fetchSummaryReport() {
+  const [result] = await sequelize.query(`
+    SELECT 
+      COUNT(*) AS transaction_count,
+      SUM(amount) AS total_income,
+      ROUND(AVG(amount), 2) AS average_payment
+    FROM transaction
+  `);
+
+  return result[0];
+}
+
+
 // ----- TRANSACTIONS -----
 export async function insertTransaction(data) {
   const { customer_id, amount, status, description, created_at } = data;
