@@ -22,7 +22,7 @@ export async function insertInvoice(data) {
 
   try {
     const [result] = await sequelize.query(
-      'INSERT INTO invoices (customer_id, amount, status, description) VALUES ($1, $2, $3, $4) RETURNING *',
+      'INSERT INTO invoices (customer_id, amount, status, description, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING *',
       {
         bind: [customer_id, amount, status, description],
         type: sequelize.QueryTypes.INSERT,
@@ -61,7 +61,7 @@ export async function changeInvoiceStatus(id, status) {
 export async function insertReceipt(data) {
   const { customer_id, amount, description } = data;
   const [result] = await sequelize.query(
-    'INSERT INTO receipt (customer_id, amount, description) VALUES ($1, $2, $3) RETURNING *',
+    'INSERT INTO receipt (customer_id, amount, description, created_at) VALUES ($1, $2, $3, $4) RETURNING *',
     { bind: [customer_id, amount, description] }
   );
   return result[0];
