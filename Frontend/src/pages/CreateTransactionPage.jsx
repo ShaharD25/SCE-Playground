@@ -10,23 +10,27 @@ function CreateTransactionPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
+      if (!createdAt) throw new Error('Please select a month.');
+  
+      const fullDate = new Date(`${createdAt}-01T00:00:00Z`);
+      if (isNaN(fullDate.getTime())) throw new Error('Invalid date format.');
+  
       const response = await api.post('/finance/transaction', {
         customer_id: Number(customerId),
         amount: Number(amount),
         status,
         description,
-        created_at : new Date(createdAt+ '-01') 
+        created_at: fullDate.toISOString()
       });
-
+  
       if (status.toLowerCase() === 'paid') {
         alert('Receipt has been sent to your email');
       } else {
         alert('Transaction created successfully!');
       }
-
-      // Clear form
+  
       setCustomerId('');
       setAmount('');
       setStatus('');
@@ -34,10 +38,10 @@ function CreateTransactionPage() {
       setCreatedAt('');
     } catch (error) {
       console.error('Failed to create transaction:', error);
-      alert('Failed to create transaction');
+      alert(error.message || 'Failed to create transaction');
     }
   };
-
+  
   return (
     <div style={{ padding: '2rem' }}>
       <h2>Create Transaction</h2>

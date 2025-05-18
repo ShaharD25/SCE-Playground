@@ -17,15 +17,14 @@ export const sequelize = new Sequelize(process.env.DB_CONNECTION_STRING, {
 
 // ----- INVOICES -----
 export async function insertInvoice(data) {
-  const { customer_id, amount, status, description } = data;
+  const { customer_id, amount, status, description, created_at } = data;
   console.log('Trying to insert invoice:', data);
 
   try {
     const [result] = await sequelize.query(
       'INSERT INTO invoices (customer_id, amount, status, description, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING *',
       {
-        bind: [customer_id, amount, status, description],
-        type: sequelize.QueryTypes.INSERT,
+        bind: [customer_id, amount, status, description, created_at]
       }
     );
 
@@ -59,10 +58,10 @@ export async function changeInvoiceStatus(id, status) {
 
 // ----- RECEIPTS -----
 export async function insertReceipt(data) {
-  const { customer_id, amount, description } = data;
+  const { customer_id, amount, description, created_at } = data;
   const [result] = await sequelize.query(
-    'INSERT INTO receipt (customer_id, amount, description, created_at) VALUES ($1, $2, $3, $4) RETURNING *',
-    { bind: [customer_id, amount, description] }
+    'INSERT INTO receipt (customer_id, amount, status, description, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+    { bind: [customer_id, amount, description, created_at] }
   );
   return result[0];
 }
