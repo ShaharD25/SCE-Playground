@@ -15,6 +15,6 @@ router.get('/report', getAllReports);
 router.get('/report:id', getReportById);
 router.put('/report:id/status', updateReportStatus);
 router.get('/summary', getSummaryReport);
-router.get('/report/monthly', getMonthlyReport); 
+router.get('/monthly', getMonthlyReport); 
 
 export default router;
