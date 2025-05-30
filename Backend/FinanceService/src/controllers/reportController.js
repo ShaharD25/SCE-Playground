@@ -64,7 +64,7 @@ export const getMonthlyReport = async (req, res) => {
   }
 
   try {
-    const report = await getMonthlyReportService(month);
+    const report = await getMonthlyReportService(year, month);
     res.status(200).json(report);
   } catch (err) {
     console.error('Error fetching monthly report:', err);
