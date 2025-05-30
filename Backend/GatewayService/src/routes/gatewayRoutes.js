@@ -1,10 +1,9 @@
-// gateway-service/src/routes/gatewayRoutes.js
-import { Router } from 'express';
-import { forwardAuthRequests } from '../controllers/gatewayController.js';
+import express from 'express';
+import { forwardAuthRequests, forwardFinanceRequests, ping } from '../controllers/gatewayController.js';
+const router = express.Router();
 
-const router = Router();
-
-// Forward all /auth/* requests
 router.use('/auth', forwardAuthRequests);
+router.use('/finance', forwardFinanceRequests);  
+router.get('/ping', ping);
 
 export default router;
