@@ -31,13 +31,15 @@ function CreateTransactionPage() {
       setStatus('');
       setDescription('');
       setCreatedAt('');
-      setLoading(false); // כאן - לפני alert
+      setLoading(false); 
+
+
 
       setTimeout(() => {
         if (status.toLowerCase() === 'paid') {
-          alert('Receipt has been sent to your email');
+          alert('Transaction paid and created successfully! receipt has been sent to email');
         } else {
-          alert('Transaction created successfully!');
+          alert('Transaction created successfully! when menager changes status to "paid", receipt will be sent to email');
         }
       }, 0);
 
