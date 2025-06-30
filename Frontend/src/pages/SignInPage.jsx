@@ -6,7 +6,7 @@ import api from '../services/api.js';
 import '../App.css';
 
 export default function SignInPage() {
-  const { signIn, signOut } = useContext(StoreContext);
+  const { signIn, signOut, token } = useContext(StoreContext);
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -20,8 +20,9 @@ export default function SignInPage() {
     setLoading(true);
 
     try {
-      await signIn(email, password); // now it does everything
-      navigate('/'); // navigate after success
+      const { data } = await api.post('/auth/signin', { email, password });
+      signIn({ email, ...data.user }, data.token);
+      navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || 'Sign in failed');
     } finally {
@@ -31,6 +32,7 @@ export default function SignInPage() {
 
   return (
     <div className='auth-container'>
+      {/* LOADER – sits above everything else when active */}
       {loading && (
         <div className='loader-overlay'>
           <div className='spinner' />

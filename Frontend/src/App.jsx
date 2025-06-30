@@ -59,9 +59,10 @@ function Navbar() {
       ? user.email[0]
       : null;
 
+// While loading/validating, you can show a spinner or skeleton here
   if (isLoading || isValidating) {
     return (
-      <div className="navbar">
+      <div className="navbar">  
         <div className="nav-left">
           <img
             className="university-icon"
@@ -87,6 +88,7 @@ function Navbar() {
         <div className="nav-links">
           <Link to="/">Home</Link>
           {!user ? (
+        
             <>
               <Link to="/signin">Sign In</Link>
               <Link to="/signup">Sign Up</Link>
@@ -118,6 +120,15 @@ function App() {
             <Route path="/products" element={<ProductsPage />} />
             <Route path="/products/:id" element={<ProductPage />} />
 
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <HomePage />
+                </ProtectedRoute>
+              }
+            />
+            
             <Route path="/sales" element={<SalesPage />} />
             <Route path="/salesConverstaion" element={<SalesConverstaionPage />} />
             <Route path="/salesSearchHistory" element={<SalesSearchHistoryPage />} />

@@ -66,14 +66,12 @@ export function StoreProvider({ children }) {
 
   const signIn = (userData, authToken) => {
     setUser(userData);
-
-    return userData; // The caller will decide what to do next
+    setToken(authToken);
   };
 
-  // Handle user sign-out (no navigation here)
   const signOut = () => {
-    localStorage.removeItem('user');
     setUser(null);
+    setToken(null);
   };
 
   const value = {
