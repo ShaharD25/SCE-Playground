@@ -102,6 +102,22 @@ export default function HomePage() {
             </button>
 
         </div>
+          {/* ── FINANCE TILE ── */}
+        <div style={tileStyle}>
+          <img src="/reports.jpg" alt="Finance" style={imgStyle} />
+          <button
+            onClick={() => navigate('/finance-module')}
+            style={btnStyle}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.transform = 'scale(1.05)')
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.transform = 'scale(1)')
+            }
+          >
+            Finance
+          </button>
+</div>
       </div>
     </div>
   );

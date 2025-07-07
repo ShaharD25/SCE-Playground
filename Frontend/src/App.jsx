@@ -25,8 +25,12 @@ import ProductsAdminRoute from './components/ProductsAdminRoute';
 import './App.css'; // Import the new CSS
 import ReportsPage from './pages/ReportsPage.jsx';
 import SalesLeadsPage from  './pages/SalesLeadsPage.jsx';
-
-
+import FinanceModulePage from './pages/FinanceModulePage.jsx';
+import CreateTransactionPage from './pages/CreateTransactionPage.jsx';
+import ViewTransactionsPage from './pages/ViewTransactionsPage.jsx';
+import ManagementPage from './pages/ManagementPage.jsx';
+import MonthlyReportPage from './pages/MonthlyReportPage.jsx';
+import UpdateStatusPage from './pages/UpdateStatusPage.jsx';
 import TechSupport from './pages/TechSupportPage.jsx';
 import ProductPage from './pages/ProductPage.jsx';
 import EditProductPage from './pages/UpdateProductPage.jsx';
@@ -160,6 +164,55 @@ function App() {
                 </ProductsAdminRoute>
               }
             />
+            <Route
+              path="/finance-module"
+              element={
+                <ProtectedRoute>
+                  <FinanceModulePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/finance/create"
+              element={
+                <ProtectedRoute>
+                  <CreateTransactionPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/finance-module/view"
+              element={
+                <ProtectedRoute>
+                  <ViewTransactionsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/finance/management"
+              element={
+                <ProtectedRoute>
+                  <ManagementPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/finance/management/monthly"
+              element={
+                <ProtectedRoute>
+                  <MonthlyReportPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/update-status"
+              element={
+                <ProtectedRoute>
+                  <UpdateStatusPage />
+                </ProtectedRoute>
+              }
+              />
+              
           </Routes>
         </div>
       </BrowserRouter>
