@@ -149,4 +149,8 @@ style.innerHTML = `
 `;
 document.head.appendChild(style);
 
+<<<<<<< HEAD
 export default CreateTransactionPage;
+=======
+export default CreateTransactionPage;
+>>>>>>> 9f70c9e15933a17fe18aa1b756cabd0286646031

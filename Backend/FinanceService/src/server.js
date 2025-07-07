@@ -7,7 +7,11 @@ import receiptRoutes from './routes/receiptRoutes.js';
 import reportRoutes from './routes/reportRoutes.js';
 
 dotenv.config();
+<<<<<<< HEAD
 console.log('DB connection string:', process.env.POSTGRES_URI);
+=======
+console.log('DB connection string:', process.env.DB_CONNECTION_STRING);
+>>>>>>> 9f70c9e15933a17fe18aa1b756cabd0286646031
 
 
 console.log('server.js started');
